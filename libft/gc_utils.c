@@ -12,18 +12,18 @@
 
 #include "libft.h"
 
-void	ft_lstadd_back(t_heapdata **lst, t_heapdata *new)
+void	ft_lstadd_backmalloc(t_heapdata **lst, t_heapdata *new)
 {
 	if (!lst || !new)
 		return ;
 	if (*lst == NULL)
 		*lst = new;
 	else
-		ft_lstlast(*lst)->next = new;
+		ft_lstlastmalloc(*lst)->next = new;
 	new->next = NULL;
 }
 
-t_heapdata	*ft_lstlast(t_heapdata *lst)
+t_heapdata	*ft_lstlastmalloc(t_heapdata *lst)
 {
 	if (!lst)
 		return (NULL);

@@ -82,7 +82,7 @@ void	*collector(t_heapdata **h_d, size_t s)
 		ft_free(h_d);
 		exit(1);
 	}
-	ft_lstadd_back(h_d, new_allocation(ptr, h_d));
+	ft_lstadd_backmalloc(h_d, new_allocation(ptr, h_d));
 	return (ptr);
 }
 

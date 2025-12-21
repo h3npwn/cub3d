@@ -43,7 +43,7 @@ all: $(NAME)
 bonus: $(OBJSB)
 	ar -crs $(NAME) $^
 
-$(NAME): $(OBJS)
+$(NAME): $(OBJS) $(OBJSB)
 	ar -crs $@ $^
 
 %.o: %.c

@@ -29,8 +29,8 @@ typedef struct s_heapdata
 } t_heapdata;
 
 /*-----------------------*/
-void	ft_lstadd_back(t_heapdata **lst, t_heapdata *new);
-t_heapdata	*ft_lstlast(t_heapdata *lst);
+void	ft_lstadd_backmalloc(t_heapdata **lst, t_heapdata *new);
+t_heapdata	*ft_lstlastmalloc(t_heapdata *lst);
 
 long long		ft_atoi(const char *str);
 char			**bash_split(const char *s, char *mask);
@@ -70,5 +70,11 @@ void			ft_striteri(char *s, void (*f)(unsigned int, char*));
 void			ft_lstiter(t_list *lst, void (*f)(void *));
 int				ft_isspace(char c);
 void			*heap_manager(int size, char flag, void *to_free);
+void	ft_lstadd_back(t_list **lst, t_list *new);
+t_list	*ft_lstlast(t_list *lst);
+void	ft_lstdelone(t_list *lst, void (*del)(void*));
+void	ft_lstclear(t_list **lst, void (*del)(void*));
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+t_list	*ft_lstnew(void *content);
 
 #endif

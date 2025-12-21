@@ -16,7 +16,7 @@ t_list	*ft_lstnew(void *content)
 {
 	t_list	*listnew;
 
-	listnew = (t_list *)malloc(sizeof(t_list));
+	listnew = heap_manager(sizeof(t_list), 'a', 0);
 	if (!listnew)
 		return (NULL);
 	listnew->content = content;

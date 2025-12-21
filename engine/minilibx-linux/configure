@@ -119,13 +119,8 @@ main(){
 
 	log_info 'Execute "make all" from file "makefile.gen"'
 		${MAKE} -f Makefile.gen all
-	# Optionally skip building the tests/example program (some systems lack libbsd)
-	if [ "${SKIP_TESTS}" = "1" ]; then
-		log_info 'SKIP_TESTS=1 set, skipping test build'
-	else
-		log_info 'Execute "make all" from file "test/makefile.gen"'
+	log_info 'Execute "make all" from file "test/makefile.gen"'
 		(cd test ; ${MAKE} -f Makefile.gen all )
-	fi
 }
 
 main "$@"

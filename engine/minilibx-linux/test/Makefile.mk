@@ -20,14 +20,9 @@ else ifeq ($(UNAME), FreeBSD)
 	# FreeBSD
 	CC = clang
 else
-	# Linux and others...
+	#Linux and others...
 	CC	= gcc
-	# Add -lbsd only if libbsd is available on the system.
-	# Try ldconfig (most Linuxes) or fallback to checking common lib paths.
-	BSD_LIB := $(shell ldconfig -p 2>/dev/null | grep -q libbsd && echo yes || (ls /usr/lib*/libbsd* 2>/dev/null | grep -q . && echo yes))
-	ifeq ($(BSD_LIB),yes)
-		LFLAGS += -lbsd
-	endif
+	LFLAGS += -lbsd
 endif
 
 all: $(NAME)
