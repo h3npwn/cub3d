@@ -7,6 +7,26 @@
 #define Y 1
 //#define win_w
 //#define win_h 
+
+#include "../engine/minilibx-linux/mlx.h"
+#include <limits.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+#include <stdio.h>
+#include <unistd.h>
+#include "../libft/libft.h"
+
+typedef enum e_error
+{
+	ERR_ARGC = 0,
+	ERR_FILE,
+	ERR_CONFIG,
+	ERR_MALLOC,
+	ERR_MAP,
+	ERR_UNKNOWN
+}	t_error;
+
 typedef struct s_rgb
 {
     int r;
@@ -73,4 +93,10 @@ typedef struct s_cub
 void    ft_config(t_config *config);
 void    print_config(t_config *config);
 char    *get_next_line(int fd);
+void exit_failure(int code, int isnoexit);
+t_config* init(char **av);
+
+/*-------------------*/
+void print_config(t_config *cfg);
+/*-------------------*/
 #endif

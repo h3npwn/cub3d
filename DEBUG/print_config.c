@@ -1,5 +1,6 @@
-#include <stdio.h>
 #include "../headers/cub3d.h"
+#include <stdio.h>
+
 
 static void print_rgb(const char *name, t_rgb c)
 {

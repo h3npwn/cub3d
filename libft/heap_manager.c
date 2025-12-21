@@ -12,6 +12,7 @@
 
 #include "libft.h"
 #include <stddef.h>
+#include "../headers/cub3d.h"
 
 static void	ft_free(t_heapdata **heapdata)
 {
@@ -27,15 +28,14 @@ static void	ft_free(t_heapdata **heapdata)
 	*heapdata = NULL;
 }
 
-static t_heapdata	*new_allocation(void *ptr, t_heapdata **ptr_heap)
+static t_heapdata	*new_allocation(void *ptr)
 {
 	t_heapdata	*node;
 
 	node = malloc(sizeof(t_heapdata));
 	if (!node)
 	{
-		ft_free(ptr_heap);
-		exit(1);
+		exit_failure(ERR_MALLOC, 1);
 	}
 	node->ptr_h = ptr;
 	node->next = NULL;
@@ -77,12 +77,8 @@ void	*collector(t_heapdata **h_d, size_t s)
 
 	ptr = malloc(s);
 	if (!ptr)
-	{
-		ft_putstr_fd("malloc fail\n", 2);
-		ft_free(h_d);
-		exit(1);
-	}
-	ft_lstadd_backmalloc(h_d, new_allocation(ptr, h_d));
+		exit_failure(ERR_MALLOC, 1);
+	ft_lstadd_backmalloc(h_d, new_allocation(ptr));
 	return (ptr);
 }
 

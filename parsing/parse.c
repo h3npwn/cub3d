@@ -25,24 +25,24 @@
 void	fill_rgb(t_rgb *rgb, char *line)
 {
 	if (!ft_isdigit(line[0]))
-		exit(2);
+		exit_failure(2, 1);
 	rgb->r = ft_atoi(line);
 	while (*line && isdigit(*line))
 		line++;
+	if (*line != ',' || !ft_isdigit(line[1]))
+		exit_failure(2, 1);
 	line++;
-	if (!ft_isdigit(line[0]))
-		exit(2);
 	rgb->g = ft_atoi(line);
 	while (*line && isdigit(*line))
 		line++;
+	if (*line != ',' || !ft_isdigit(line[1]))
+		exit_failure(2, 1);
 	line++;
-	if (!ft_isdigit(line[0]))
-		exit(2);
 	rgb->b = ft_atoi(line);
 	while (*line && isdigit(*line))
 		line++;
 	if (*line && *line != '\n')
-		exit(2);
+		exit_failure(2, 1);
 }
 int isvalid(char *line, t_config* config)
 {
@@ -90,7 +90,7 @@ void	read_path_texture(int fd, t_config *config)
 			totalvisits++;
 		}
 		else
-			exit(5);
+			exit_failure(ERR_MAP, 1);
 	}
 }
 void	combine_chunks(t_list *chunks, t_config *config, int count_lines)
@@ -103,8 +103,6 @@ void	combine_chunks(t_list *chunks, t_config *config, int count_lines)
 	current = chunks;
 	i = 0;
 	char **rows = heap_manager(sizeof(char *) * count_lines, 'a', 0);
-	if (!rows)
-		exit(3);
 	while (current)
 	{
 		rows[i] = (char *)current->content;
@@ -133,7 +131,7 @@ void	parse_map(t_config *config, int fd)
 	{
 		if (*line == '\n')
 		{
-			free(line);
+			heap_manager(0,	'r', line);
 			line = get_next_line(fd);
 			continue;
 		}
@@ -143,20 +141,40 @@ void	parse_map(t_config *config, int fd)
 		line = get_next_line(fd);
 	}
 	if(line_count == 0)
-		exit(3);
+		exit_failure(3, 1);
 	combine_chunks(chunks, config, line_count);
 }
+int	file_check(const char *file, const char *ext)
+{
+	int	i;
+	int	j;
 
+	if ((!file || !ext))
+		return (0);
+	j = 0;
+	i = ft_strlen(file) - ft_strlen(ext);
+	if (i <= 0)
+		return (0);
+	if (file[i - 1] == '/')
+		return (0);
+	while (file[i] == ext[j] && ext[j])
+	{
+		i++;
+		j++;
+	}
+	if (file[i] == '\0')
+		return (1);
+	return (0);
+}
 void    ft_config(t_config *config)
 {
-	int fd = open("./maps/file", O_RDONLY);
+	int fd = open(config->filename, O_RDONLY);
+	if (!file_check(config->filename, ".cub") || fd < 0)
+		exit_failure(ERR_FILE, 1);
 	read_path_texture(fd, config);
 	print_config(config);
 	parse_map(config, fd);
 	for(int i = 0; i < config->map.height; i++)
-	{
 		printf("%s", config->map.grid[i]);
-	}
 	close(fd);
-	exit(0);
 }
