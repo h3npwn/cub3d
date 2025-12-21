@@ -12,7 +12,7 @@ GNL_DIR = gnl
 MLX_DIR = $(ENGINE_DIR)/minilibx-linux
 MLX_LIBS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lpthread -ldl
 
-ENGINE_SRCS = $(ENGINE_DIR)/main.c parsing/parse.c parsing/inits/init_read.c parsing/bfs_utils.c DEBUG/print_config.c $(GNL_DIR)/get_next_line.c
+ENGINE_SRCS = $(ENGINE_DIR)/main.c parsing/parse.c parsing/parse_utils.c parsing/inits/init_read.c parsing/bfs_utils.c DEBUG/print_config.c $(GNL_DIR)/get_next_line.c
 ENGINE_OBJS = $(ENGINE_SRCS:.c=.o)
 ENGINE_BIN = cub3d
 
@@ -35,6 +35,9 @@ $(ENGINE_DIR)/%.o: $(ENGINE_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(GNL_DIR)/%.o: $(GNL_DIR)/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+parsing/%.o: parsing/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
