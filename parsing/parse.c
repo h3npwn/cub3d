@@ -14,6 +14,7 @@
 #include "../headers/cub3d.h"
 #include "../libft/libft.h"
 #include "../gnl/get_next_line.h"
+// #include <algorithm>
 #include <ctype.h>
 #include <fcntl.h>
 #include <stddef.h>
@@ -93,6 +94,28 @@ void	read_path_texture(int fd, t_config *config)
 			exit_failure(ERR_MAP, 1);
 	}
 }
+void	check_chars(char *line, t_config *config)
+{
+	const char		valid_chars[] = " 01NSEW\n";
+	char			*playerpos;
+	int				i = 0;
+	static int		player = 0;
+
+	playerpos = NULL;
+	while (line[i])
+	{
+		if (!ft_strchr(valid_chars, line[i]) || player > 1)
+			exit_failure(ERR_MAP, 1);
+		playerpos = ft_strchr("NSEW", line[i]);
+		if (playerpos && ++player)
+			config->player.pos[X] = i;
+		if (line[i] == '\n')
+			line[i] = 0;
+	i++;
+}
+	if (player == 0)
+		config->player.pos[Y]++;
+}
 void	combine_chunks(t_list *chunks, t_config *config, int count_lines)
 {
 	t_list *current;
@@ -102,7 +125,7 @@ void	combine_chunks(t_list *chunks, t_config *config, int count_lines)
 	pifon = 0;
 	current = chunks;
 	i = 0;
-	char **rows = heap_manager(sizeof(char *) * count_lines, 'a', 0);
+	char **rows = heap_manager(sizeof(char *) * (count_lines + 1), 'a', 0);
 	while (current)
 	{
 		rows[i] = (char *)current->content;
@@ -115,6 +138,7 @@ void	combine_chunks(t_list *chunks, t_config *config, int count_lines)
 	config->map.height = count_lines;
 	config->map.width = pifon;
 	config->map.grid = rows;
+	config->map.grid[config->map.height] = NULL;
 	rows = NULL;
 }
 
@@ -126,19 +150,30 @@ void	parse_map(t_config *config, int fd)
 	line_count = 0;
 	chunks = NULL;
 	char *line;
-	line = get_next_line(fd);
+	while (1)
+	{
+		line = get_next_line(fd);
+		if (*line == '\n')
+			heap_manager(0,	'r', line);
+		else
+			break;
+	}
+
 	while (line)
 	{
-		if (*line == '\n')
-		{
-			heap_manager(0,	'r', line);
-			line = get_next_line(fd);
-			continue;
-		}
+		if (line && *line == '\n')
+			break;
+		check_chars(line, config);
 		t_list *new_chunk = ft_lstnew(line);
 		ft_lstadd_back(&chunks, new_chunk);
 		line_count++;
 		line = get_next_line(fd);
+	}
+	while (line)
+	{
+		line = get_next_line(fd);
+		if (line && *line != '\n')
+			exit_failure(ERR_CONFIG, 1);
 	}
 	if(line_count == 0)
 		exit_failure(3, 1);
@@ -166,15 +201,43 @@ int	file_check(const char *file, const char *ext)
 		return (1);
 	return (0);
 }
+void	copy_map(t_map map)
+{
+	char **new_grid;
+	int i = 0;
+
+	new_grid = heap_manager(sizeof(char *) * (map.height + 3), 'a', 0);
+	new_grid[map.height + 2] = NULL;
+	new_grid[i] = heap_manager(sizeof(char) * (map.width + 2), 'a', 0);
+	ft_memset(new_grid[i], ' ', map.width + 2);
+	new_grid[i][map.width + 1] = 0;
+	while (map.grid[i])
+	{
+		new_grid[i + 1] = heap_manager(sizeof(char) * (map.width + 2), 'a', 0);
+		ft_memset(new_grid[i + 1], ' ', map.width + 2);
+		new_grid[i + 1][map.width + 1] = 0;
+		ft_memcpy(new_grid[i + 1] + 1, map.grid[i], ft_strlen(map.grid[i]));
+		i++;
+	}
+
+	new_grid[i + 1] = heap_manager(sizeof(char) * (map.width + 2), 'a', 0);
+	ft_memset(new_grid[i + 1], ' ', map.width + 2);
+	new_grid[i + 1][map.width + 1] = 0;
+	for (int j = 0; new_grid[j]; j++)
+		printf("%s\n", new_grid[j]);
+	if (bfs(map, new_grid) == 0)
+		exit_failure(ERR_MAP, 1);
+	// map.grid = new_grid;
+}
+
 void    ft_config(t_config *config)
 {
 	int fd = open(config->filename, O_RDONLY);
 	if (!file_check(config->filename, ".cub") || fd < 0)
 		exit_failure(ERR_FILE, 1);
 	read_path_texture(fd, config);
-	print_config(config);
 	parse_map(config, fd);
-	for(int i = 0; i < config->map.height; i++)
-		printf("%s", config->map.grid[i]);
+	copy_map(config->map);
+	print_config(config);
 	close(fd);
 }

@@ -5,6 +5,7 @@
 int	main(int ac, char **av)
 {
 	t_config	*config;
+
 	if (ac != 2)
 		exit_failure(0, 1);
 	config = init(av);

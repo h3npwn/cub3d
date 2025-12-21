@@ -75,6 +75,12 @@ typedef struct s_tex_img
 	int		w;
 	int		h;
 }	t_tex_img;
+typedef struct s_node
+{
+	int				x;
+	int				y;
+	struct s_node	*next;
+}	t_node;
 
 #define TEX_NORTH 0
 #define TEX_SOUTH 1
@@ -95,7 +101,7 @@ void    print_config(t_config *config);
 char    *get_next_line(int fd);
 void exit_failure(int code, int isnoexit);
 t_config* init(char **av);
-
+int	bfs(t_map map, char **copy);
 /*-------------------*/
 void print_config(t_config *cfg);
 /*-------------------*/

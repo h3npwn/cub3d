@@ -2,7 +2,7 @@
 .PHONY: all libft mlx engine clean fclean re
 
 CC = cc
-CFLAGS := -Wall -Wextra -Werror
+CFLAGS := -Wall -Wextra -Werror -g
 
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
@@ -12,7 +12,7 @@ GNL_DIR = gnl
 MLX_DIR = $(ENGINE_DIR)/minilibx-linux
 MLX_LIBS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lpthread -ldl
 
-ENGINE_SRCS = $(ENGINE_DIR)/main.c parsing/parse.c parsing/inits/init_read.c DEBUG/print_config.c $(GNL_DIR)/get_next_line.c
+ENGINE_SRCS = $(ENGINE_DIR)/main.c parsing/parse.c parsing/inits/init_read.c parsing/bfs_utils.c DEBUG/print_config.c $(GNL_DIR)/get_next_line.c
 ENGINE_OBJS = $(ENGINE_SRCS:.c=.o)
 ENGINE_BIN = cub3d
 
