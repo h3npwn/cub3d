@@ -107,7 +107,8 @@ void		print_config(t_config *config);
 char		*get_next_line(int fd);
 void		exit_failure(int code, int isnoexit);
 t_config	*init(char **av);
-int			bfs(t_map map, char **copy);
+void		bfs(t_map map, char **copy, int start_x, int start_y);
+void		check_inside_map(t_map map, char **copy);
 void		check_chars(char *line, t_config *config);
 /*-------------------*/
 void		print_config(t_config *cfg);

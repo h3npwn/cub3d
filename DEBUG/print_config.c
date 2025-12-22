@@ -33,7 +33,7 @@ void print_config(t_config *cfg)
 	// else
 	// 	printf("map.grid: (null)\n");
 	for(int i = 0; i < cfg->map.height; i++)
-		printf("%s", cfg->map.grid[i]);
+		printf("%s\n", cfg->map.grid[i]);
 	printf("\n");
 	printf("player.pos:   %f, %f\n", cfg->player.pos[X], cfg->player.pos[Y]);
 	printf("player.dir_view: %f, %f\n", cfg->player.dir_view[X], cfg->player.dir_view[Y]);

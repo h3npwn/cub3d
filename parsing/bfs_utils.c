@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   bfs_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abahja <abahja@student-1337.ma>            +#+  +:+       +#+        */
+/*   By: mochajou <mochajou@student.1337>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 23:31:17 by abahja            #+#    #+#             */
-/*   Updated: 2025/12/21 23:31:18 by abahja           ###   ########.fr       */
+/*   Updated: 2025/12/22 16:57:20 by mochajou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../headers/cub3d.h"
 
@@ -50,28 +49,24 @@ t_node	*dequeue(t_node **queue)
 	front->next = NULL;
 	return (front);
 }
+
 void	move_on(t_map map, char **copy, t_node **queue, t_node *current)
 {
 	int			i;
 	int			nx;
 	int			ny;
-	const int dirs[4][2] = {{0, -1}, {1, 0},{0, 1},{-1, 0}};
+	const char	*s = "0NSWE";
+	const int	dirs[4][2] = {{0, -1}, {1, 0}, {0, 1}, {-1, 0}};
 
 	i = 0;
 	while (i < 4)
 	{
 		nx = current->x + dirs[i][0];
 		ny = current->y + dirs[i][1];
-		if (nx >= 0 && nx < map.width + 1 && ny >= 0 && ny < map.height + 2)
+		if (nx >= 0 && nx < map.width + 2 && ny >= 0 && ny < map.height + 2)
 		{
-            if (copy[ny][nx] == '0')
-			{
-				for (int i = 0; copy[i]; i++)
-				{
-					printf("|%s|: %ld\n", copy[i], ft_strlen(copy[i]));
-				}
-                exit_failure(ERR_MAP, 1);
-			}
+			if (copy[ny][nx] && ft_strchr(s, copy[ny][nx]))
+				exit_failure(ERR_MAP, 1);
 			if (copy[ny][nx] != '1' && copy[ny][nx] != 'v')
 			{
 				copy[ny][nx] = 'v';
@@ -82,13 +77,14 @@ void	move_on(t_map map, char **copy, t_node **queue, t_node *current)
 	}
 }
 
-int	bfs(t_map map, char **copy)
+void	bfs(t_map map, char **copy, int start_x, int start_y)
 {
 	t_node	*queue;
 	t_node	*current;
 
-	queue = creat_node(0, 0);
-	copy[0][0] = 'v';
+	printf("Visiting node: (%d, %d)\n", start_x, start_y);
+	queue = creat_node(start_x, start_y);
+	copy[start_y][start_x] = 'v';
 	while (queue)
 	{
 		current = dequeue(&queue);
@@ -96,10 +92,4 @@ int	bfs(t_map map, char **copy)
 		heap_manager(0, 'r', current);
 	}
 	heap_manager(0, 'r', queue);
-	#include "../headers/cub3d.h"
-    // for (int i = 0; copy[i]; i++)
-    // {
-    //     printf("|%s|: %ld\n", copy[i], ft_strlen(copy[i]));
-    // }
-	return (1);
 }

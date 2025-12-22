@@ -6,7 +6,7 @@
 /*   By: mochajou <mochajou@student.1337>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 16:48:07 by mochajou          #+#    #+#             */
-/*   Updated: 2025/12/22 00:32:33 by mochajou         ###   ########.fr       */
+/*   Updated: 2025/12/22 16:48:57 by mochajou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,22 +98,22 @@ void	copy_map(t_map map)
 	i = 0;
 	new_grid = heap_manager(sizeof(char *) * (map.height + 3), 'a', 0);
 	new_grid[map.height + 2] = NULL;
-	new_grid[i] = heap_manager(sizeof(char) * (map.width + 2), 'a', 0);
+	new_grid[i] = heap_manager(sizeof(char) * (map.width + 3), 'a', 0);
 	ft_memset(new_grid[i], ' ', map.width + 2);
-	new_grid[i][map.width + 1] = 0;
+	new_grid[i][map.width + 2] = 0;
 	while (map.grid[i])
 	{
-		new_grid[i + 1] = heap_manager(sizeof(char) * (map.width + 2), 'a', 0);
+		new_grid[i + 1] = heap_manager(sizeof(char) * (map.width + 3), 'a', 0);
 		ft_memset(new_grid[i + 1], ' ', map.width + 2);
-		new_grid[i + 1][map.width + 1] = 0;
+		new_grid[i + 1][map.width + 2] = 0;
 		ft_memcpy(new_grid[i + 1] + 1, map.grid[i], ft_strlen(map.grid[i]));
 		i++;
 	}
-	new_grid[i + 1] = heap_manager(sizeof(char) * (map.width + 2), 'a', 0);
+	new_grid[i + 1] = heap_manager(sizeof(char) * (map.width + 3), 'a', 0);
 	ft_memset(new_grid[i + 1], ' ', map.width + 2);
-	new_grid[i + 1][map.width + 1] = 0;
-	if (bfs(map, new_grid) == 0)
-		exit_failure(ERR_MAP, 1);
+	new_grid[i + 1][map.width + 2] = 0;
+	bfs(map, new_grid, 0, 0);
+	check_inside_map(map, new_grid);
 }
 
 void	ft_config(t_config *config)

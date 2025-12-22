@@ -6,7 +6,7 @@
 /*   By: mochajou <mochajou@student.1337>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 00:26:34 by mochajou          #+#    #+#             */
-/*   Updated: 2025/12/22 00:32:42 by mochajou         ###   ########.fr       */
+/*   Updated: 2025/12/22 16:49:10 by mochajou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,4 +86,23 @@ int	file_check(const char *file, const char *ext)
 	if (file[i] == '\0')
 		return (1);
 	return (0);
+}
+
+void	check_inside_map(t_map map, char **copy)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (copy[i])
+	{
+		j = 0;
+		while (copy[i][j])
+		{
+			if (copy[i][j] == ' ')
+				bfs(map, copy, j, i);
+			j++;
+		}
+		i++;
+	}
 }
