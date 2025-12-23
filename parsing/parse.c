@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mochajou <mochajou@student.1337>           +#+  +:+       +#+        */
+/*   By: abahja <abahja@student-1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 16:48:07 by mochajou          #+#    #+#             */
-/*   Updated: 2025/12/22 16:48:57 by mochajou         ###   ########.fr       */
+/*   Updated: 2025/12/22 18:40:10 by abahja           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,6 @@ void	ft_config(t_config *config)
 	read_path_texture(fd, config);
 	parse_map(config, fd);
 	copy_map(config->map);
-	print_config(config);
+	// print_config(config);
 	close(fd);
 }

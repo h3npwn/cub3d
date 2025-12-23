@@ -1,0 +1,66 @@
+# gdb script for cub3d debug example
+# Sets a breakpoint at function `bfs`, prints map info and the first row of `copy`,
+# and displays `queue` on stops.
+
+# Load pretty-printers (from .vscode/gdb_pretty_printers.py)
+python
+import sys
+# Ensure workspace-relative .vscode is on the Python path (gdb is started from workspace root)
+sys.path.insert(0, './.vscode')
+try:
+    import gdb_pretty_printers
+    gdb_pretty_printers.register_printers(None)
+    print('gdb: cub3d pretty-printers loaded')
+except Exception as e:
+    print('gdb: could not load pretty-printers:', e)
+end
+
+# Allow breakpoints to be created before symbols are loaded (avoid warnings)
+set breakpoint pending on
+
+break bfs
+commands
+  printf "== hit bfs ==\n"
+  # print map dimensions (map is passed by value)
+  printf "map.width=%d map.height=%d\n", map.width, map.height
+  # print first line of the copy buffer
+  printf "copy[0]=%s\n", copy[0]
+  # automatically display the queue pointer on each stop
+  display queue
+  continue
+end
+
+# Automatically set OOB watchpoints for every malloc without surfacing stops to VS Code
+# (using an internal breakpoint to avoid SourceRequest on glibc files).
+python
+import gdb
+
+class MallocWatch(gdb.Breakpoint):
+    def __init__(self):
+        super().__init__("malloc", internal=True)
+        self.silent = True
+
+    def stop(self):
+        try:
+            size = int(gdb.parse_and_eval("$rdi"))
+            gdb.execute("finish", to_string=True)
+            ptr = gdb.parse_and_eval("$rax")
+            if int(ptr) != 0:
+                gdb.execute(f"awatch *((char *)({ptr}) + {size})", to_string=True)
+                print(f"gdb: OOB watch at {(int(ptr) + size):#x} (ptr {int(ptr):#x} + size {size})")
+        except Exception as e:
+            print("gdb: malloc watch error:", e)
+        return False  # never stop on this breakpoint
+
+MallocWatch()
+end
+
+# Keep the parse.c breakpoint for quick inspection; gdbinit will already attach OOB watchpoints to malloc.
+break parsing/parse.c:125
+commands
+  silent
+  printf "== stopped in ft_config buffer init ==\n"
+  printf "line ptr=%p\n", line
+  x/8bx line
+  continue
+end

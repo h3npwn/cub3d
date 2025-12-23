@@ -1,15 +1,23 @@
 
 #ifndef CUB3D_H
-
 # define CUB3D_H
-# define WIN_W 1220
-# define WIN_H 600
+
+/*------------------------------------------*/
+// # define COLS 14
+// # define ROWS 9
 # define X 0
 # define Y 1
+# define TILE_SIZE 32
+# define FOV 60 * (M_PI / 180)
+# define WINDOW_WIDTH   (TILE_SIZE)
+# define WINDOW_HEIGHT  (TILE_SIZE)
+# define RES 4
+# define NUM_RAYS  (WINDOW_WIDTH / RES)
+/*------------------------------------------*/
 //#define win_w
 //#define win_h 
 
-# include "../engine/minilibx-linux/mlx.h"
+# include "../../minilibx-linux/mlx.h"
 # include <limits.h>
 # include <stdlib.h>
 # include <string.h>
@@ -43,22 +51,40 @@ typedef struct s_map
 	int		width;
 	int		height;
 }	t_map;
+typedef  struct s_ray
+{
+	double ray_angle;
+	double wall_hit_x;
+	double wall_hit_y;
+	double distance;
+	int tail_size;
+}	t_ray;
 
 typedef struct s_player
 {
 	double	pos[2];
 	double	dir_view[2];
 	double	plane[2];
+	double	move_speed;
+	double	radius;
+	double	rot_speed;
+	double	rot_angle;
+	int		walk_direction;
+	int		turn_direction;
 	char	dir;	// 'N' 'S' 'E' 'W'
 }	t_player;
 
 typedef struct s_config
 {
+	void		*mlx;
+	void		*win;
 	char		*filename;
 	char		*north;
 	char		*south;
 	char		*west;
 	char		*east;
+	int			num_rays;
+	t_ray		*rays;
 	t_rgb		floor;
 	t_rgb		ceiling;
 	t_map		map;
@@ -75,6 +101,8 @@ typedef struct s_tex_img
 	int		w;
 	int		h;
 }	t_tex_img;
+
+
 
 typedef struct s_node
 {
@@ -112,6 +140,10 @@ void		check_inside_map(t_map map, char **copy);
 void		check_chars(char *line, t_config *config);
 /*-------------------*/
 void		print_config(t_config *cfg);
+void	render_scene(t_config *config);
+void mlx_draw_circle(void *mlx, void *win, int center_x, int center_y, int color);
+void mlx_draw_rectangle(void *mlx, void *win, int x, int y, int width, int height, int color);
+void mlx_draw_line(void *mlx, void *win, int x0, int y0, int x1, int y1, int color);
 /*-------------------*/
 
 #endif

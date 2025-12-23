@@ -211,6 +211,7 @@ void	start_window(t_config *cfg)
 	destroy_display(&cub);
 }
 
+
 static void player_view_init(t_config *config)
 {
 	static const struct {

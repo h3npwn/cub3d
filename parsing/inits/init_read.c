@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_read.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mochajou <mochajou@student.1337>           +#+  +:+       +#+        */
+/*   By: abahja <abahja@student-1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 23:42:40 by abahja            #+#    #+#             */
-/*   Updated: 2025/12/22 00:46:36 by mochajou         ###   ########.fr       */
+/*   Updated: 2025/12/22 21:08:55 by abahja           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,10 @@ void	check_chars(char *line, t_config *config)
 			exit_failure(ERR_MAP, 1);
 		playerpos = ft_strchr("NSEW", line[i]);
 		if (playerpos && ++player)
+		{
 			config->player.pos[X] = i;
+			config->player.dir = *playerpos;
+		}
 		if (line[i] == '\n')
 			line[i] = 0;
 		i++;
