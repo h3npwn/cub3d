@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bfs_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mochajou <mochajou@student.1337>           +#+  +:+       +#+        */
+/*   By: abahja <abahja@student-1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 23:31:17 by abahja            #+#    #+#             */
-/*   Updated: 2025/12/22 16:57:20 by mochajou         ###   ########.fr       */
+/*   Updated: 2025/12/23 18:46:17 by abahja           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ void	bfs(t_map map, char **copy, int start_x, int start_y)
 	t_node	*queue;
 	t_node	*current;
 
-	printf("Visiting node: (%d, %d)\n", start_x, start_y);
 	queue = creat_node(start_x, start_y);
 	copy[start_y][start_x] = 'v';
 	while (queue)

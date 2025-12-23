@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mochajou <mochajou@student.1337>           +#+  +:+       +#+        */
+/*   By: abahja <abahja@student-1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 00:26:34 by mochajou          #+#    #+#             */
-/*   Updated: 2025/12/22 16:49:10 by mochajou         ###   ########.fr       */
+/*   Updated: 2025/12/23 19:21:35 by abahja           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/cub3d.h"
-#include "../libft/libft.h"
+
 
 void	fill_rgb(t_rgb *rgb, char *line)
 {
@@ -34,6 +34,7 @@ void	fill_rgb(t_rgb *rgb, char *line)
 		line++;
 	if (*line && *line != '\n')
 		exit_failure(2, 1);
+	rgb->value = (rgb->r << 16) | (rgb->g << 8) | rgb->b;
 }
 
 int	isvalid(char *line, t_config	*config)
@@ -105,4 +106,18 @@ void	check_inside_map(t_map map, char **copy)
 		}
 		i++;
 	}
+}
+
+void	ft_config(t_config *config)
+{
+	int	fd;
+	printf("Starting configuration setup...\n");
+	fd = open(config->filename, O_RDONLY);
+	if (!file_check(config->filename, ".cub") || fd < 0)
+		exit_failure(ERR_FILE, 1);
+	read_path_texture(fd, config);
+	parse_map(config, fd);
+	copy_map(config->map);
+	printf("config is good start\n");
+	close(fd);
 }

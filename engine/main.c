@@ -1,191 +1,247 @@
-
 #include "../headers/cub3d.h"
-#include "minilibx-linux/mlx.h"
-#include <sys/types.h>
+#include <mlx.h>
+#include <math.h>
+#include <stdlib.h>
 
+#define ENABLE_3D_VIEW 1
 
-
-
-int is_wall(char** grid, double x, double y)
+static int	is_wall(t_cub *cub, double x, double y)
 {
-	int grid_x = (int)x;
-	int grid_y = (int)y;
+	int	grid_x;
+	int	grid_y;
+	t_map	*map;
 
-	// if (grid_y < 0 || grid[grid_y] == NULL || grid_x < 0 || grid[grid_y][grid_x] == '\0')
-	// 	return 1; // Out of bounds treated as wall
-	return (grid[grid_y][grid_x] == '1');
+	map = &cub->cfg->map;
+	grid_x = (int)x;
+	grid_y = (int)y;
+	return (grid_y < 0 || grid_y >= map->height || grid_x < 0
+		|| grid_x >= (int)ft_strlen(map->grid[grid_y])
+		|| map->grid[grid_y][grid_x] == '1');
 }
-double distance(int x0, int y0, int x1, int y1)
+
+static void	try_move(t_cub *cub, double dx, double dy)
 {
-	return sqrt((x1 - x0) * (x1 - x0) + (y1 - y0) * (y1 - y0));
+	double	nx;
+	double	ny;
+
+	nx = cub->cfg->player.pos[X] + dx;
+	ny = cub->cfg->player.pos[Y] + dy;
+	if (is_wall(cub, nx, ny))
+		return ;
+	cub->cfg->player.pos[X] = nx;
+	cub->cfg->player.pos[Y] = ny;
 }
 
-
-static int	render_loop(void *param)
+static void	move_direction(t_cub *cub, double angle, double step)
 {
-	render_scene((t_config *)param);
-	return (0);
+	try_move(cub, cos(angle) * step, sin(angle) * step);
 }
-int update(int keycode, void *param)
+
+/*
+** =========================
+** MLX INIT
+** =========================
+*/
+
+void	mlx_init_ptrs(t_cub *cub)
 {
-	t_cub *cub = (t_cub *)param;
-	t_config *cfg = cub->cfg;
-	double moveSpeed = 0.3; /* units per keypress */
-	double rotSpeed = 0.3;  /* radians per keypress */
+	cub->mlx = mlx_init();
+	if (!cub->mlx)
+		exit_failure(ERR_INIT, 1);
 
-	// int
-	/* Forward/back (W/S) */
-	if (keycode == 119 || keycode == 87) /* 'w' or 'W' */
-	{
-		double nx = cfg->player.pos[X] + cfg->player.dir_view[0] * moveSpeed;
-		double ny = cfg->player.pos[Y] + cfg->player.dir_view[1] * moveSpeed;
-		if (!is_wall(cfg->map.grid, nx, cfg->player.pos[Y]))
-			cfg->player.pos[X] = nx;
-		if (!is_wall(cfg->map.grid, cfg->player.pos[X], ny))
-			cfg->player.pos[Y] = ny;
-	}
-	else if (keycode == 115 || keycode == 83) /* 's' or 'S' */
-	{
-		double nx = cfg->player.pos[X] - cfg->player.dir_view[0] * moveSpeed;
-		double ny = cfg->player.pos[Y] - cfg->player.dir_view[1] * moveSpeed;
-		if (!is_wall(cfg->map.grid, nx, cfg->player.pos[Y]))
-			cfg->player.pos[X] = nx;
-		if (!is_wall(cfg->map.grid, cfg->player.pos[X], ny))
-			cfg->player.pos[Y] = ny;
-	}
-	else if (keycode == 97 || keycode == 65)
-	{
-		double nx = cfg->player.pos[X] - cfg->player.plane[0] * moveSpeed;
-		double ny = cfg->player.pos[Y] - cfg->player.plane[1] * moveSpeed;
-		if (!is_wall(cfg->map.grid, nx, cfg->player.pos[Y]))
-			cfg->player.pos[X] = nx;
-		if (!is_wall(cfg->map.grid, cfg->player.pos[X], ny))
-			cfg->player.pos[Y] = ny;
-	}
-	else if (keycode == 100 || keycode == 68)
-	{
-		double nx = cfg->player.pos[X] + cfg->player.plane[0] * moveSpeed;
-		double ny = cfg->player.pos[Y] + cfg->player.plane[1] * moveSpeed;
-		if (!is_wall(cfg->map.grid, nx, cfg->player.pos[Y]))
-			cfg->player.pos[X] = nx;
-		if (!is_wall(cfg->map.grid, cfg->player.pos[X], ny))
-			cfg->player.pos[Y] = ny;
-	}
-
-	else if (keycode == 65361) /* left */
-	{
-		double oldDirX = cfg->player.dir_view[0];
-		double oldPlaneX = cfg->player.plane[0];
-		double ang = -rotSpeed;
-		cfg->player.dir_view[0] = cfg->player.dir_view[0] * cos(ang) - cfg->player.dir_view[1] * sin(ang);
-		cfg->player.dir_view[1] = oldDirX * sin(ang) + cfg->player.dir_view[1] * cos(ang);
-		cfg->player.plane[0] = cfg->player.plane[0] * cos(ang) - cfg->player.plane[1] * sin(ang);
-		cfg->player.plane[1] = oldPlaneX * sin(ang) + cfg->player.plane[1] * cos(ang);
-	}
-	else if (keycode == 65363) /* right */
-	{
-		double oldDirX = cfg->player.dir_view[0];
-		double oldPlaneX = cfg->player.plane[0];
-		cfg->player.dir_view[0] = cfg->player.dir_view[0] * cos(rotSpeed) - cfg->player.dir_view[1] * sin(rotSpeed);
-		cfg->player.dir_view[1] = oldDirX * sin(rotSpeed) + cfg->player.dir_view[1] * cos(rotSpeed);
-		cfg->player.plane[0] = cfg->player.plane[0] * cos(rotSpeed) - cfg->player.plane[1] * sin(rotSpeed);
-		cfg->player.plane[1] = oldPlaneX * sin(rotSpeed) + cfg->player.plane[1] * cos(rotSpeed);
-	}
-	render_scene(cfg);
-	return (0);
+	cub->win = mlx_new_window(
+		cub->mlx,
+		cub->win_w,
+		cub->win_h,
+		"cub3d"
+	);
+	if (!cub->win)
+		exit_failure(ERR_INIT, 1);
 }
-void mlx_initx(t_config *config)
-{
-	void *mlx  = NULL;
-	void *win = NULL;
 
-	mlx = mlx_init();
-	if (!mlx)
-	{
-		fprintf(stderr, "Error\nFailed to initialize MiniLibX.\n");
-		exit(EXIT_FAILURE);
-	}
-	win = mlx_new_window(mlx, TILE_SIZE * config->map.width, TILE_SIZE * config->map.height, "Cub3D");
-	if (!mlx || !win)
-	{
-		fprintf(stderr, "Error\nFailed to initialize MiniLibX.\n");
-		exit(EXIT_FAILURE);
-	}
-	printf("Player position: (%f, %f)\n", config->player.pos[X], config->player.pos[Y]);
-	config->player.pos[X] += 0.5;
-	config->player.pos[Y] += 0.5;
-	config->mlx = mlx;
-	config->win = win;
-	// render_scene(config);
-	// mlx_hook(win, 2, 1L << 0, update, config);
-	t_cub cub;
-	ft_memset(&cub, 0, sizeof(t_cub));
-	cub.mlx = mlx;
-	cub.win = win;
-	cub.cfg = config;
-	config->num_rays = (config->map.width * TILE_SIZE) / RES;
-	printf("NUM_RAYS set to %d\n", config->num_rays);
-	config->rays = heap_manager(sizeof(t_ray) * config->num_rays, 'a', 0);
-	if (!config->rays)
-		exit_failure(ERR_MALLOC, 1);
-	ft_memset(config->rays, 0, sizeof(t_ray) * config->num_rays);
-	// exit(1);
-		// mlx_loop_hook(mlx, render_loop, config);
-		render_scene(cub.cfg);
-		mlx_hook(win, 2, 1L << 0, update, &cub);
-		mlx_loop(mlx);
-	
-	// mlx_loop(mlx);
-	printf("Exiting mlx_loop\n");
-	// Normally you would store mlx and win in a struct for later use
-}
-static void player_view_init(t_config *config)
+/*
+** =========================
+** FRAME BUFFER
+** =========================
+*/
+
+void	frame_init(t_cub *cub)
 {
-	static const struct {
-		char dir;
-		double dx, dy;
-		double px, py;
-	} dir_map[] = {
-		{'N', 0.0, -1.0,  0.66,  0.0},
-		{'S', 0.0,  1.0, -0.66,  0.0},
-		{'E', 1.0,  0.0,  0.0,   0.66},
-		{'W',-1.0,  0.0,  0.0,  -0.66},
-		{0,   0.0,  0.0,  0.0,   0.0}
-	};
-	for (int i = 0; dir_map[i].dir; ++i)
+	cub->frame.img = mlx_new_image(cub->mlx, cub->win_w, cub->win_h);
+	if (!cub->frame.img)
+		exit_failure(ERR_INIT, 1);
+	cub->frame.width = cub->win_w;
+	cub->frame.height = cub->win_h;
+
+	cub->frame.addr = mlx_get_data_addr(
+		cub->frame.img,
+		&cub->frame.bpp,
+		&cub->frame.line_len,
+		&cub->frame.endian
+	);
+}
+
+void	frame_clear(t_tex_img *img, int w, int h)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (y < h)
 	{
-		if (config->player.dir == dir_map[i].dir)
+		x = 0;
+		while (x < w)
 		{
-			config->player.dir_view[0] = dir_map[i].dx;
-			config->player.dir_view[1] = dir_map[i].dy;
-			config->player.plane[0] = dir_map[i].px;
-			config->player.plane[1] = dir_map[i].py;
-			return;
+			img_pixel_put(img, x, y, 0x000000);
+			x++;
 		}
+		y++;
 	}
-	config->player.dir_view[0] = 0.0;
-	config->player.dir_view[1] = -1.0;
-	config->player.plane[0] = 0.66;
-	config->player.plane[1] = 0.0;
 }
-int	main(int ac, char **av)
+
+/*
+** =========================
+** DRAW PLAYER (BUFFERED)
+** =========================
+*/
+
+void	draw_player(t_player *player, t_cub *cub)
+{
+	int	start_x;
+	int	start_y;
+	int	end_x;
+	int	end_y;
+
+	start_x = player->pos[X] * TILE_SIZE;
+	start_y = player->pos[Y] * TILE_SIZE;
+
+	end_x = start_x + cos(player->rot_angle) * (TILE_SIZE * 3);
+	end_y = start_y + sin(player->rot_angle) * (TILE_SIZE * 3);
+
+	draw_circle(&cub->frame, start_x, start_y, GREEN);
+	// draw_line(&cub->frame, start_x, start_y, end_x, end_y, RED);
+}
+
+/*
+** =========================
+** GAME LOOP
+** =========================
+*/
+
+int	update_game(void *param)
+{
+	t_cub	*cub;
+
+	cub = (t_cub *)param;
+
+	render_3d_view(cub);
+
+	mlx_put_image_to_window(
+		cub->mlx,
+		cub->win,
+		cub->frame.img,
+		0,
+		0
+	);
+	return (0);
+}
+
+static int	key_press(int keycode, void *param)
+{
+	t_cub	*cub;
+	double	step;
+	double	rot;
+
+	cub = (t_cub *)param;
+	step = 0.1;
+	rot = 5 * (M_PI / 180);
+	if (keycode == 65307)
+		exit(0);
+	if (keycode == 'w')
+		move_direction(cub, cub->cfg->player.rot_angle, step);
+	if (keycode == 's')
+		move_direction(cub, cub->cfg->player.rot_angle + M_PI, step);
+	if (keycode == 'a')
+		move_direction(cub, cub->cfg->player.rot_angle - (M_PI / 2), step);
+	if (keycode == 'd')
+		move_direction(cub, cub->cfg->player.rot_angle + (M_PI / 2), step);
+	if (keycode == 65361)
+		player_set_angle(cub->cfg, cub->cfg->player.rot_angle - rot);
+	if (keycode == 65363)
+		player_set_angle(cub->cfg, cub->cfg->player.rot_angle + rot);
+	return (0);
+}
+
+/*
+** =========================
+** INIT
+** =========================
+*/
+
+t_config	*init(char **av, t_cub *cub)
 {
 	t_config	*config;
 
+	config = heap_manager(sizeof(t_config), 'a', 0);
+	if (!config)
+		exit_failure(ERR_MALLOC, 1);
 
-	if (ac != 2)
-		exit_failure(0, 1);
-	config = init(av);
+	ft_memset(config, 0, sizeof(t_config));
+	config->filename = av[1];
 	ft_config(config);
 
-	player_view_init(config);
-	// print grid 
-	for(int i = 0; i < config->map.height; i++)
-		printf("%s\n", config->map.grid[i]);
-	printf("\n");
+	cub->cfg = config;
+	cub->win_w = config->map.width * TILE_SIZE;
+	cub->win_h = config->map.height * TILE_SIZE;
+	cub->num_rays = cub->win_w;
 
-	mlx_initx(config);
-	heap_manager(0, 'f', 0);
+	player_inits(cub);
+	player_view_init(cub->cfg);
+	return (config);
+}
+
+/*
+** =========================
+** MAIN
+** =========================
+*/
+void	img_pixel_put(t_tex_img *img, int x, int y, int color)
+{
+	char	*dst;
+
+	if (!img || !img->addr)
+		return ;
+	if (x < 0 || y < 0)
+		return ;
+	if (x >= img->width || y >= img->height)
+		return ;
+
+	dst = img->addr
+		+ (y * img->line_len)
+		+ (x * (img->bpp / 8));
+
+	*(unsigned int *)dst = color;
 }
 
 
+int	main(int ac, char **av)
+{
+	t_cub	cub;
+
+	if (ac != 2)
+		exit_failure(0, 1);
+
+	ft_memset(&cub, 0, sizeof(t_cub));
+
+	init(av, &cub);
+	mlx_init_ptrs(&cub);
+	frame_init(&cub);
+	load_textures(&cub);
+
+	mlx_hook(cub.win, 2, 1L << 0, key_press, &cub);
+	mlx_loop_hook(cub.mlx, update_game, &cub);
+	mlx_loop(cub.mlx);
+
+	heap_manager(0, 'f', 0);
+	return (0);
+}

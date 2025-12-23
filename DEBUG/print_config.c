@@ -36,8 +36,6 @@ void print_config(t_config *cfg)
 		printf("%s\n", cfg->map.grid[i]);
 	printf("\n");
 	printf("player.pos:   %f, %f\n", cfg->player.pos[X], cfg->player.pos[Y]);
-	printf("player.dir_view: %f, %f\n", cfg->player.dir_view[X], cfg->player.dir_view[Y]);
-	printf("player.plane: %f, %f\n", cfg->player.plane[X], cfg->player.plane[Y]);
 	printf("player.dir: %c\n", cfg->player.dir ? cfg->player.dir : '?');
 	printf("=== end ===\n");
 }

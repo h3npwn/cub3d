@@ -58,7 +58,7 @@ Core expectations:
 - Display different wall textures depending on orientation (North/South/West/East).
 - Floor and ceiling colors must be configurable independently.
 - Controls (must be responsive and produce clean shutdowns):
-  - `W/A/S/D` move the player.
+  - `W/A/S/D` move the player->
   - Left/right arrows rotate the camera.
   - `ESC` or closing the window must exit cleanly.
 
