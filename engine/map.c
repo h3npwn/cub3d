@@ -6,7 +6,7 @@
 /*   By: abahja <abahja@student-1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 18:58:09 by abahja            #+#    #+#             */
-/*   Updated: 2025/12/23 22:03:22 by abahja           ###   ########.fr       */
+/*   Updated: 2025/12/23 23:05:50 by abahja           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ static void	draw_tiles(t_cub *cub)
 		j = 0;
 		while (map->grid[i][j])
 		{
-			draw_rectangle(&cub->frame, j * TILE_SIZE, i * TILE_SIZE,
-				TILE_SIZE, TILE_SIZE, map->grid[i][j] == '1' ? DARK_GRAY : WHITE);
+			draw_rectangle(&cub->frame, j *( TILE_SIZE - 20), i *( TILE_SIZE - 20),
+			(	TILE_SIZE - 20),( TILE_SIZE - 20), map->grid[i][j] == '1' ? DARK_GRAY : WHITE);
 			j++;
 		}
 		i++;
@@ -65,8 +65,8 @@ static void	draw_single_ray(t_cub *cub, double angle)
 			break ;
 		dist += 0.01;
 	}
-	draw_line(&cub->frame, player->pos[X] * TILE_SIZE, player->pos[Y] * TILE_SIZE,
-		hit_x * TILE_SIZE, hit_y * TILE_SIZE, YELLOW);
+	draw_line(&cub->frame, player->pos[X] * (TILE_SIZE - 20), player->pos[Y] * (TILE_SIZE - 20),
+		hit_x * (TILE_SIZE - 20), hit_y * (TILE_SIZE - 20), YELLOW);
 }
 
 static void	draw_rays(t_cub *cub)
@@ -76,7 +76,7 @@ static void	draw_rays(t_cub *cub)
 	double	angle;
 	double	step;
 
-	rays = 360;
+	rays = 30;
 	angle = cub->cfg->player.rot_angle - (FOV / 2);
 	step = FOV / (double)(rays - 1);
 	i = 0;

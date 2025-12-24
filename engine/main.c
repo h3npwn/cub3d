@@ -112,12 +112,11 @@ void	draw_player(t_player *player, t_cub *cub)
 	int	end_x;
 	int	end_y;
 
-	start_x = player->pos[X] * TILE_SIZE;
-	start_y = player->pos[Y] * TILE_SIZE;
+	start_x = player->pos[X] * (TILE_SIZE - 50);
+	start_y = player->pos[Y] * (TILE_SIZE - 50);
 
-	end_x = start_x + cos(player->rot_angle) * (TILE_SIZE * 3);
-	end_y = start_y + sin(player->rot_angle) * (TILE_SIZE * 3);
-
+	end_x = start_x + cos(player->rot_angle) * ((TILE_SIZE - 50) * 3);
+	end_y = start_y + sin(player->rot_angle) * ((TILE_SIZE - 50) * 3);
 	draw_circle(&cub->frame, start_x, start_y, GREEN);
 	// draw_line(&cub->frame, start_x, start_y, end_x, end_y, RED);
 }
@@ -135,6 +134,7 @@ int	update_game(void *param)
 	cub = (t_cub *)param;
 
 	render_3d_view(cub);
+	display_map(cub);
 
 	mlx_put_image_to_window(
 		cub->mlx,

@@ -1,9 +1,9 @@
 /* XPM */
 static char *wall_xpm[] = {
 "16 16 3 1",
-"0 c #000000ff",   /* dark green (border / stripes) */
-"1 c #000000ff",   /* light green (background) */
-"2 c #000000ff",   /* darker green (border) */
+"0 c #8B0000",   /* dark red */
+"1 c #FF6347",   /* tomato */
+"2 c #B22222",   /* firebrick */
 "2222222222222222",
 "2111111111111112",
 "2101111111111112",

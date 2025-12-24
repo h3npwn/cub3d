@@ -15,6 +15,8 @@
 
 void	fill_rgb(t_rgb *rgb, char *line)
 {
+	while (*line && ft_isspace(*line))
+		line++;
 	if (!ft_isdigit(line[0]))
 		exit_failure(2, 1);
 	rgb->r = ft_atoi(line);

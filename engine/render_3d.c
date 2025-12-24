@@ -119,7 +119,7 @@ static void	draw_column(t_cub *cub, int x, t_rayhit *hit)
 	unsigned int	color;
 
 	tex = &cub->textures[hit->tex_id];
-	line_h = (int)(cub->win_h / fmax(hit->distance, 0.0001));
+	line_h = (int)(cub->win_h / hit->distance);
 	draw_start = -line_h / 2 + (cub->win_h / 2);
 	if (draw_start < 0)
 		draw_start = 0;
@@ -133,6 +133,8 @@ static void	draw_column(t_cub *cub, int x, t_rayhit *hit)
 		tex_x = tex->width - tex_x - 1;
 	step = (double)tex->height / line_h;
 	tex_pos = (draw_start - cub->win_h / 2 + line_h / 2) * step;
+	if (tex_pos < 0)
+		tex_pos = 0;
 	y = 0;
 	while (y < draw_start)
 		img_pixel_put(&cub->frame, x, y++, cub->cfg->ceiling.value);
@@ -142,8 +144,8 @@ static void	draw_column(t_cub *cub, int x, t_rayhit *hit)
 			tex_pos = tex->height - 1;
 		color = texture_color(tex, tex_x, (int)tex_pos);
 		tex_pos += step;
-		if (hit->side == 1)
-			color = (color >> 1) & 0x7F7F7F;
+		// if (hit->side == 1)
+		// 	color = (color >> 1) & 0x7F7F7F;
 		img_pixel_put(&cub->frame, x, y++, color);
 	}
 	while (y < (int)cub->win_h)
