@@ -110,7 +110,7 @@ void	ft_init_map(t_cub3d *config)
 	if (!file_check(config->map_path, ".cub") || fd < 0)
 		exit_failure(ERR_FILE, 1);
 	read_path_texture(fd, config);
-	print_config(config);
+	//print_config(config);
 	parse_map(config, fd);
 	copy_map(config->map);
 	close(fd);

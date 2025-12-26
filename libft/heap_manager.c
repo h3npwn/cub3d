@@ -87,6 +87,7 @@ void	*heap_manager(int size, char flag, void *to_free)
 	static t_heapdata	*heap_data = NULL;
 	void				*ptr;
 
+
 	ptr = NULL;
 	if (flag == 'r')
 		ft_remove(&heap_data, to_free, ptr);

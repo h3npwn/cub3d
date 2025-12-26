@@ -29,6 +29,8 @@ void	print_config(t_cub3d *cfg);
 /*-------------------*/
 /*----- Utils -----*/
 /*-------------------*/
+void	detect_player_position(char *line, t_cub3d *config, int y);
+void	set_directions(t_cub3d *cfg);
 
 
 // void		img_pixel_put(t_tex_img *img, int x, int y, int color);

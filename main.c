@@ -7,10 +7,11 @@ void init_game(char **argv, t_cub3d *cub3d)
 {
     ft_memset(cub3d, 0, sizeof(t_cub3d));
     cub3d->map_path = argv[1];
-    printf("Map path set to: %s\n", cub3d->map_path);
     ft_init_map(cub3d);
-    exit(1);
+	set_directions(cub3d);
+    //exit(1);
 }
+
 int	main(int argc, char **argv)
 {
     t_cub3d	cub3d;

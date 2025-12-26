@@ -70,8 +70,8 @@ void	check_chars(char *line, t_cub3d *config)
 		if (!ft_strchr(ALLOWED_ELEMENTS, line[i]) || player > 1)
 			exit_failure(ERR_MAP, 1);
 		playerpos = ft_strchr(VIEW_P_DIR, line[i]);
-		if (playerpos && ++player)
-			config->initial_dir = *playerpos;
+		if (playerpos)
+			playerpos++;
 		if (line[i] == '\n')
 			line[i] = '\0';
 		i++;

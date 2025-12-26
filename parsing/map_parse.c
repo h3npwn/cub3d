@@ -52,7 +52,26 @@ void	copy_map(t_map map)
 	bfs(map, new_grid, 0, 0);
 	check_inside_map(map, new_grid);
 }
+void	detect_player_position(char *line, t_cub3d *config, int y)
+{
+	int	x;
 
+	x = 0;
+	while (line[x])
+	{
+		if (line[x] == 'N' || line[x] == 'S' || line[x] == 'E' || line[x] == 'W')
+		{
+			if (config->initial_dir != 0)
+				exit_failure(ERR_CONFIG, 1);
+			config->initial_dir = line[x];
+			config->player.posx = x + 0.5;
+			config->player.posy = y + 0.5;
+			line[x] = '0';
+			break;
+		}
+		x++;
+	}
+}
 void	combine_chunks(t_list *chunks, t_cub3d *config, int count_lines)
 {
 	t_list	*current;
@@ -69,6 +88,7 @@ void	combine_chunks(t_list *chunks, t_cub3d *config, int count_lines)
 		rows[i] = (char *)current->content;
 		if (ft_strlen(rows[i]) > pifon)
 			pifon = ft_strlen(rows[i]);
+		detect_player_position(rows[i], config, i);
 		current->content = NULL;
 		current = current->next;
 		i++;

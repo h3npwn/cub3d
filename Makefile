@@ -13,8 +13,9 @@ MLX_DIR = $(ENGINE_DIR)/minilibx-linux
 MLX_LIBS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lpthread -ldl
 
 ENGINE_SRCS = parsing/bfs_utils.c parsing/parse_utils.c parsing/map_parse.c  parsing/init_read_errors.c \
-				gnl/get_next_line.c gnl/get_next_line_utils.c \
+				gnl/get_next_line.c \
 				main.c DEBUG/print_config.c \
+				player_inits.c
 
 ENGINE_OBJS = $(ENGINE_SRCS:.c=.o)
 ENGINE_BIN = cub3d
