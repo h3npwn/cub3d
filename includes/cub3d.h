@@ -18,6 +18,7 @@ int		isvalid(char *line, t_cub3d	*config);
 char	*get_next_line(int fd);
 int		file_check(const char *file, const char *ext);
 void	read_path_texture(int fd, t_cub3d *config);
+void	detect_player_position(char *line, t_cub3d *config, int y);
 void	combine_chunks(t_list *chunks, t_cub3d *config, int count_lines);
 void	print_config(t_cub3d *config);
 void	exit_failure(int code, int isnoexit);
@@ -29,8 +30,8 @@ void	print_config(t_cub3d *cfg);
 /*-------------------*/
 /*----- Utils -----*/
 /*-------------------*/
-void	detect_player_position(char *line, t_cub3d *config, int y);
 void	set_directions(t_cub3d *cfg);
+void	mlx_inits(t_cub3d* cfg);
 
 
 // void		img_pixel_put(t_tex_img *img, int x, int y, int color);

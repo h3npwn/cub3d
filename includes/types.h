@@ -41,7 +41,7 @@ typedef enum e_error
 typedef struct s_img
 {
 	void	*img;
-	int		*addr;
+	void	*addr;
 	int		endian;
 	int		pix_bits;
 	int		size_line;

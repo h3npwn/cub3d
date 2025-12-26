@@ -9,6 +9,7 @@ void init_game(char **argv, t_cub3d *cub3d)
     cub3d->map_path = argv[1];
     ft_init_map(cub3d);
 	set_directions(cub3d);
+    mlx_inits(cub3d);
     //exit(1);
 }
 
