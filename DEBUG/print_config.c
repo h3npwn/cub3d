@@ -1,41 +1,14 @@
-#include "../headers/cub3d.h"
+#include "../includes/cub3d.h"
 #include <stdio.h>
 
 
-static void print_rgb(const char *name, t_rgb c)
+void print_config(t_cub3d *cfg)
 {
-	printf("%s: r=%d g=%d b=%d value=0x%06x\n", name, c.r, c.g, c.b, c.value);
-}
-
-void print_config(t_config *cfg)
-{
-	if (!cfg)
-	{
-		printf("t_config: (null)\n");
-		return;
-	}
-	printf("=== t_config ===\n");
-	printf("filename: %s\n", cfg->filename ? cfg->filename : "(null)");
-	printf("north: %s\n", cfg->north ? cfg->north : "(null)");
-	printf("south: %s\n", cfg->south ? cfg->south : "(null)");
-	printf("west:  %s\n", cfg->west ? cfg->west : "(null)");
-	printf("east:  %s\n", cfg->east ? cfg->east : "(null)");
-	print_rgb("floor", cfg->floor);
-	print_rgb("ceiling", cfg->ceiling);
-	printf("map: width=%d height=%d\n", cfg->map.width, cfg->map.height);
-	// if (cfg->map.grid)
-	// {
-	// 	for (i = 0; i < cfg->map.height; ++i)
-	// 	{
-	// 		printf("%3d: %s\n", i, cfg->map.grid[i] ? cfg->map.grid[i] : "(null)");
-	// 	}
-	// }
-	// else
-	// 	printf("map.grid: (null)\n");
-	for(int i = 0; i < cfg->map.height; i++)
-		printf("%s\n", cfg->map.grid[i]);
-	printf("\n");
-	printf("player.pos:   %f, %f\n", cfg->player.pos[X], cfg->player.pos[Y]);
-	printf("player.dir: %c\n", cfg->player.dir ? cfg->player.dir : '?');
-	printf("=== end ===\n");
+	printf("Configuration:\n");
+	printf("North Texture Path: %s\n", cfg->north_path);
+	printf("South Texture Path: %s\n", cfg->south_path);
+	printf("East Texture Path: %s\n", cfg->east_path);
+	printf("West Texture Path: %s\n", cfg->west_path);
+	printf("ciel Color set to => Hex: 0x%06X\n",((void *)cfg->f_color));
+	printf("Floor Color: => Hex: 0x%06X\n",((void *)cfg->c_color));
 }

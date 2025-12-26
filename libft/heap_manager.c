@@ -12,7 +12,7 @@
 
 #include "libft.h"
 #include <stddef.h>
-#include "../headers/cub3d.h"
+#include "../includes/cub3d.h"
 
 static void	ft_free(t_heapdata **heapdata)
 {

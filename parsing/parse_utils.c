@@ -6,40 +6,31 @@
 /*   By: abahja <abahja@student-1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 00:26:34 by mochajou          #+#    #+#             */
-/*   Updated: 2025/12/23 19:21:35 by abahja           ###   ########.fr       */
+/*   Updated: 2025/12/25 23:44:59 by abahja           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/cub3d.h"
+#include "../includes/cub3d.h"
 
-
-void	fill_rgb(t_rgb *rgb, char *line)
+void	fill_rgb(color_t *color, char *line)
 {
-	while (*line && ft_isspace(*line))
+	t_rawcolor buffer;
+
+	buffer.r = (unsigned char)ft_atoi(line);
+	line += 2;
+	while (*line && (*line < '0' || *line > '9'))
 		line++;
-	if (!ft_isdigit(line[0]))
-		exit_failure(2, 1);
-	rgb->r = ft_atoi(line);
-	while (*line && ft_isdigit(*line))
+	buffer.g = (unsigned char)ft_atoi(line);
+	line += 2;
+	while (*line && (*line < '0' || *line > '9'))
 		line++;
-	if (*line != ',' || !ft_isdigit(line[1]))
-		exit_failure(2, 1);
-	line++;
-	rgb->g = ft_atoi(line);
-	while (*line && ft_isdigit(*line))
-		line++;
-	if (*line != ',' || !ft_isdigit(line[1]))
-		exit_failure(2, 1);
-	line++;
-	rgb->b = ft_atoi(line);
-	while (*line && ft_isdigit(*line))
-		line++;
-	if (*line && *line != '\n')
-		exit_failure(2, 1);
-	rgb->value = (rgb->r << 16) | (rgb->g << 8) | rgb->b;
+	buffer.b = (unsigned char)ft_atoi(line);
+	*color = (*(unsigned int *)&buffer);
+	*color = (buffer.r << 16) | (buffer.g << 8) | (buffer.b);
+	return ;
 }
 
-int	isvalid(char *line, t_config	*config)
+int	isvalid(char *line, t_cub3d	*config)
 {
 	const char	*paths[7] = {"NO ", "SO ", "EA ", "WE ", "F ", "C ", NULL};
 	int			i;
@@ -50,17 +41,17 @@ int	isvalid(char *line, t_config	*config)
 		if (!ft_strncmp(line, paths[i], ft_strlen(paths[i])))
 		{
 			if (*line == 'C')
-				fill_rgb(&config->ceiling, line + 2);
+				fill_rgb(&config->c_color, line + 2);
 			else if (*line == 'F')
-				fill_rgb(&config->floor, line + 2);
+				fill_rgb(&config->f_color, line + 2);
 			else if (*line == 'S')
-				config->south = ft_strdup(line + 3);
+				config->south_path = ft_strdup(line + 3);
 			else if (*line == 'N')
-				config->north = ft_strdup(line + 3);
+				config->north_path = ft_strdup(line + 3);
 			else if (*line == 'E')
-				config->east = ft_strdup(line + 3);
+				config->east_path = ft_strdup(line + 3);
 			else if (*line == 'W')
-				config->west = ft_strdup(line + 3);
+				config->west_path = ft_strdup(line + 3);
 			return (i + 1);
 		}
 		i++;
@@ -110,16 +101,17 @@ void	check_inside_map(t_map map, char **copy)
 	}
 }
 
-void	ft_config(t_config *config)
+void	ft_init_map(t_cub3d *config)
 {
 	int	fd;
+	fd = -1;
 	printf("Starting configuration setup...\n");
-	fd = open(config->filename, O_RDONLY);
-	if (!file_check(config->filename, ".cub") || fd < 0)
+	fd = open(config->map_path, O_RDONLY);
+	if (!file_check(config->map_path, ".cub") || fd < 0)
 		exit_failure(ERR_FILE, 1);
 	read_path_texture(fd, config);
+	print_config(config);
 	parse_map(config, fd);
 	copy_map(config->map);
-	printf("config is good start\n");
 	close(fd);
 }

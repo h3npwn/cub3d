@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mochajou <mochajou@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: abahja <abahja@student-1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 22:11:44 by mochajou          #+#    #+#             */
-/*   Updated: 2025/12/20 16:36:18 by mochajou         ###   ########.fr       */
+/*   Updated: 2025/12/25 23:24:05 by abahja           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,25 +44,6 @@ char	*ft_strdup(const char *s)
 	return (dup);
 }
 
-char	*ft_substr(const char *s, size_t len)
-{
-	char	*sub;
-	size_t	i;
-
-	if (!s)
-		return (NULL);
-	sub = (char *)malloc(sizeof(char) * (len + 1));
-	if (!sub)
-		return (NULL);
-	i = 0;
-	while (s[i] && i < len)
-	{
-		sub[i] = s[i];
-		i++;
-	}
-	sub[i] = '\0';
-	return (sub);
-}
 
 char	*ft_strjoin(const char *s1, const char *s2)
 {

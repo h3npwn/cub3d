@@ -6,11 +6,11 @@
 /*   By: abahja <abahja@student-1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 23:42:40 by abahja            #+#    #+#             */
-/*   Updated: 2025/12/23 20:03:19 by abahja           ###   ########.fr       */
+/*   Updated: 2025/12/25 23:43:14 by abahja           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/cub3d.h"
+#include "../includes/cub3d.h"
 
 void	exit_failure(int code, int isnoexit)
 {
@@ -29,7 +29,7 @@ void	exit_failure(int code, int isnoexit)
 	exit(isnoexit);
 }
 
-void	read_path_texture(int fd, t_config *config)
+void	read_path_texture(int fd, t_cub3d *config)
 {
 	char	*line;
 	int		v;
@@ -38,6 +38,7 @@ void	read_path_texture(int fd, t_config *config)
 
 	totalvisits = 0;
 	ft_memset(visited, 0, sizeof(visited));
+	line = NULL;
 	while (totalvisits < 6)
 	{
 		line = get_next_line(fd);
@@ -56,10 +57,9 @@ void	read_path_texture(int fd, t_config *config)
 	}
 }
 
-void	check_chars(char *line, t_config *config)
+void	check_chars(char *line, t_cub3d *config)
 {
 	static int		player = 0;
-	const char		valid_chars[] = " 01NSEW\n";
 	char			*playerpos;
 	int				i;
 
@@ -67,13 +67,13 @@ void	check_chars(char *line, t_config *config)
 	i = 0;
 	while (line[i])
 	{
-		if (!ft_strchr(valid_chars, line[i]) || player > 1)
+		if (!ft_strchr(ALLOWED_ELEMENTS, line[i]) || player > 1)
 			exit_failure(ERR_MAP, 1);
-		playerpos = ft_strchr("NSEW", line[i]);
+		playerpos = ft_strchr(VIEW_P_DIR, line[i]);
 		if (playerpos && ++player)
-			config->player.dir = *playerpos;
+			config->initial_dir = *playerpos;
 		if (line[i] == '\n')
-			line[i] = 0;
+			line[i] = '\0';
 		i++;
 	}
 }

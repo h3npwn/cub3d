@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mochajou <mochajou@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: abahja <abahja@student-1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 15:07:50 by mochajou          #+#    #+#             */
-/*   Updated: 2025/12/20 18:17:37 by mochajou         ###   ########.fr       */
+/*   Updated: 2025/12/25 23:22:23 by abahja           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/libft.h"
+#include <stdio.h>
 
 char	*new_line(char *s)
 {
@@ -62,6 +63,7 @@ char	*t3mar(int fd, char **l3mara)
 		}
 	}
 	heap_manager(0,'r',buff);
+
 	return (*l3mara);
 }
 

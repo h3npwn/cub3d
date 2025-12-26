@@ -1,4 +1,4 @@
-#include "../headers/cub3d.h"
+#include "../includes/cub3d.h"
 #include <stdlib.h>
 #include <mlx.h>
 

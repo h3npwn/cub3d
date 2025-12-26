@@ -8,17 +8,13 @@ LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
 
 ENGINE_DIR = engine
-GNL_DIR = gnl
+GNL_DIR = ./gnl
 MLX_DIR = $(ENGINE_DIR)/minilibx-linux
 MLX_LIBS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lpthread -ldl
 
-ENGINE_SRCS = $(ENGINE_DIR)/main.c  \
-	parsing/parse_utils.c parsing/map_parse.c \
-	parsing/init_read_errors.c parsing/bfs_utils.c \
-	DEBUG/print_config.c $(GNL_DIR)/get_next_line.c \
-	engine/map.c engine/math_utils.c engine/player_utils.c engine/render_3d.c \
-	Player/playerconstruct.c \
-	mlx_draw_utils/mlx_draw_utils.c \
+ENGINE_SRCS = parsing/bfs_utils.c parsing/parse_utils.c parsing/map_parse.c  parsing/init_read_errors.c \
+				gnl/get_next_line.c gnl/get_next_line_utils.c \
+				main.c DEBUG/print_config.c \
 
 ENGINE_OBJS = $(ENGINE_SRCS:.c=.o)
 ENGINE_BIN = cub3d

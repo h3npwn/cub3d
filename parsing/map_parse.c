@@ -6,11 +6,26 @@
 /*   By: abahja <abahja@student-1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 18:47:59 by abahja            #+#    #+#             */
-/*   Updated: 2025/12/23 18:50:29 by abahja           ###   ########.fr       */
+/*   Updated: 2025/12/25 23:41:40 by abahja           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/cub3d.h"
+#include "../includes/cub3d.h"
+
+char	*skip_empty_lines(int fd)
+{
+	char	*line;
+
+	while (1)
+	{
+		line = get_next_line(fd);
+		if (*line == '\n')
+			heap_manager(0, 'r', line);
+		else
+			break ;
+	}
+	return (line);
+}
 
 void	copy_map(t_map map)
 {
@@ -38,7 +53,7 @@ void	copy_map(t_map map)
 	check_inside_map(map, new_grid);
 }
 
-void	combine_chunks(t_list *chunks, t_config *config, int count_lines)
+void	combine_chunks(t_list *chunks, t_cub3d *config, int count_lines)
 {
 	t_list	*current;
 	size_t	pifon;
@@ -65,7 +80,7 @@ void	combine_chunks(t_list *chunks, t_config *config, int count_lines)
 	rows = NULL;
 }
 
-void	parse_map(t_config *config, int fd)
+void	parse_map(t_cub3d *config, int fd)
 {
 	t_list	*chunks;
 	int		line_count;
@@ -97,17 +112,3 @@ void	parse_map(t_config *config, int fd)
 	combine_chunks(chunks, config, line_count);
 }
 
-char	*skip_empty_lines(int fd)
-{
-	char	*line;
-
-	while (1)
-	{
-		line = get_next_line(fd);
-		if (*line == '\n')
-			heap_manager(0, 'r', line);
-		else
-			break ;
-	}
-	return (line);
-}

@@ -6,11 +6,11 @@
 /*   By: abahja <abahja@student-1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 23:31:17 by abahja            #+#    #+#             */
-/*   Updated: 2025/12/23 18:46:17 by abahja           ###   ########.fr       */
+/*   Updated: 2025/12/26 11:37:20 by abahja           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/cub3d.h"
+#include "../includes/cub3d.h"
 
 t_node	*creat_node(int x, int y)
 {
