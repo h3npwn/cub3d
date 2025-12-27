@@ -6,7 +6,7 @@
 /*   By: abahja <abahja@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 00:44:42 by abahja            #+#    #+#             */
-/*   Updated: 2025/12/27 00:59:57 by abahja           ###   ########.fr       */
+/*   Updated: 2025/12/27 16:08:01 by abahja           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,15 @@ void	mlx_inits(t_cub3d* cfg)
 			&cfg->img_frame.endian);
 	if (!cfg->img_frame.addr)
 		exit_failure(ERR_INIT, 1);
+
+	printf("bits per pixel: %d\n", cfg->img_frame.pix_bits / 8);
 }
 void	img_pixel_put(t_img_frame *img, int x, int y, int color)
 {
 	char	*dst;
 
 	dst = img->addr + (y * img->size_line + x * (img->pix_bits / 8));
+
 	*(unsigned int *)dst = color;
 }
 void	mlx_clear_image(t_img_frame *img)

@@ -8,5 +8,5 @@
 #  define MOVE_DOWN 115
 #  define MOVE_UP 119
 
-#  define ACTION_EXIT 65307
+#  define ESC 65307
 #endif

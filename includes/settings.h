@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   settings.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abahja <abahja@student-1337.ma>            +#+  +:+       +#+        */
+/*   By: abahja <abahja@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/26 11:34:56 by abahja            #+#    #+#             */
-/*   Updated: 2025/12/26 11:35:02 by abahja           ###   ########.fr       */
+/*   Updated: 2025/12/27 18:21:07 by abahja           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 
 # define WIN_WIDTH 1280
 # define WIN_HEIGHT 720
-
+# define TILE_SIZE 32
+# define FOV 60
+// 
 # define GAME_NAME "mincraft3d"
 
 # define TEX_SIZE 64
@@ -32,7 +34,7 @@
 # define FLOOR_COLOR "F "
 # define CEILING_COLOR "C "
 
-# define P_SPEED 0.01
+# define M_SPEED 0.01
 # define R_SPEED 0.02
 
 #endif

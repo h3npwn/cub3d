@@ -32,15 +32,27 @@ void	print_config(t_cub3d *cfg);
 void	set_directions(t_cub3d *cfg);
 void	mlx_inits(t_cub3d* cfg);
 
+/*-------------player movements & events handle-------------*/
+void	move_backward(t_cub3d *cub3d);
+void	move_forward(t_cub3d *cub3d);
+void	strafe_left(t_cub3d *cub3d);
+void	strafe_right(t_cub3d *cub3d);
+void	player_rotation(t_cub3d *cub3d, double angle);
+void	apply_movements(t_cub3d *cub3d);
+int		key_press(int key, t_cub3d *cub3d);
+int		key_release(int key, t_cub3d *cub3d);
+int		destroy_exit(t_cub3d *cub3d);
+void	draw_map2d(t_cub3d *cub3d);
+/*---------------------------------*/
 
-// void		img_pixel_put(t_tex_img *img, int x, int y, int color);
-// void		draw_circle(t_tex_img *img, int center_x, int center_y, int color);
-// void		draw_rectangle(t_tex_img *img, int x, int y, int width, int height, int color);
-// void		draw_line(t_tex_img *img, int x0, int y0, int x1, int y1, int color);
-// void		draw_player(t_player *player, t_cub *cub);
-// void		mlx_draw_circle(void *mlx, void *win, int center_x, int center_y, int color);
-// void		mlx_draw_rectangle(void *mlx, void *win, int x, int y, int width, int height, int color);
-// void		mlx_draw_line(void *mlx, void *win, int x0, int y0, int x1, int y1, int color);
+ void		img_pixel_put(t_img_frame *img, int x, int y, int color);
+ void		draw_circle(t_img_frame *img, int center_x, int center_y, int color);
+ void		draw_rectangle(t_img_frame *img, int x, int y, int width, int height, int color);
+ void		draw_line(t_img_frame *img, int x0, int y0, int x1, int y1, int color);
+ void		draw_player(t_player *player, t_cub3d *cub);
+ void		mlx_draw_circle(void *mlx, void *win, int center_x, int center_y, int color);
+ void		mlx_draw_rectangle(void *mlx, void *win, int x, int y, int width, int height, int color);
+ void		mlx_draw_line(void *mlx, void *win, int x0, int y0, int x1, int y1, int color);
 
 /*-------------------*/
 

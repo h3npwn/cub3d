@@ -85,6 +85,17 @@ typedef struct s_rawcolor
 	unsigned char	g;
 	unsigned char	b;
 }	t_rawcolor;
+
+typedef struct s_movements
+{
+	char m_left;
+	char m_right;
+	char m_up;
+	char m_down;
+	char c_left;
+	char c_right;
+} t_movements;
+
 typedef struct s_cub3d
 {
     void        *mlx;
@@ -95,6 +106,7 @@ typedef struct s_cub3d
 	char		*west_path;
 	char		*east_path;
 	char 	  	initial_dir;
+	t_movements	moves;
 	color_t		f_color;
 	color_t		c_color;
     t_img_frame img_frame;

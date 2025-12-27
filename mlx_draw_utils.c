@@ -1,4 +1,5 @@
-#include "../includes/cub3d.h"
+#include "includes/cub3d.h"
+#include "includes/types.h"
 #include <stdlib.h>
 #include <mlx.h>
 
@@ -8,7 +9,7 @@
 ** ======================================
 */
 
-void	draw_circle(t_tex_img *img, int center_x, int center_y, int color)
+void	draw_circle(t_img_frame *img, int center_x, int center_y, int color)
 {
 	int	radius;
 	int	x;
@@ -36,7 +37,7 @@ void	draw_circle(t_tex_img *img, int center_x, int center_y, int color)
 */
 
 void	draw_rectangle(
-	t_tex_img *img,
+	t_img_frame *img,
 	int x,
 	int y,
 	int width,
@@ -66,14 +67,7 @@ void	draw_rectangle(
 ** ======================================
 */
 
-void	draw_line(
-	t_tex_img *img,
-	int x0,
-	int y0,
-	int x1,
-	int y1,
-	int color
-)
+void	draw_line(t_img_frame *img, int x0, int y0, int x1, int y1, int color)
 {
 	int	dx;
 	int	dy;
@@ -87,7 +81,6 @@ void	draw_line(
 	sx = (x0 < x1) ? 1 : -1;
 	sy = (y0 < y1) ? 1 : -1;
 	err = dx - dy;
-
 	while (1)
 	{
 		img_pixel_put(img, x0, y0, color);
