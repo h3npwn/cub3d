@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_handlers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abahja <abahja@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mochajou <mochajou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 18:27:27 by abahja            #+#    #+#             */
-/*   Updated: 2025/12/27 18:38:09 by abahja           ###   ########.fr       */
+/*   Updated: 2025/12/27 21:20:03 by mochajou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,13 @@ int	key_release(int key, t_cub3d *cub3d)
 void	apply_movements(t_cub3d *cub3d)
 {
 	if (cub3d->moves.m_up)
-		move_forward(cub3d);
+		move(cub3d, cub3d->player.dir_x, cub3d->player.dir_y);
 	if (cub3d->moves.m_down)
-		move_backward(cub3d);
+		move(cub3d, -cub3d->player.dir_x, -cub3d->player.dir_y);
 	if (cub3d->moves.m_left)
-		strafe_left(cub3d);
+		move(cub3d, cub3d->player.plane_x, cub3d->player.plane_y);
 	if (cub3d->moves.m_right)
-		strafe_right(cub3d);
+		move(cub3d, -cub3d->player.plane_x, -cub3d->player.plane_y);
 	if (cub3d->moves.c_right)
 		player_rotation(cub3d, R_SPEED);
 	if (cub3d->moves.c_left)

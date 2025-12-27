@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_inits.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abahja <abahja@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mochajou <mochajou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 00:44:42 by abahja            #+#    #+#             */
-/*   Updated: 2025/12/27 16:08:01 by abahja           ###   ########.fr       */
+/*   Updated: 2025/12/27 20:57:42 by mochajou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/cub3d.h"
 
-void	mlx_inits(t_cub3d* cfg)
+void	mlx_inits(t_cub3d *cfg)
 {
 	cfg->mlx = mlx_init();
 	if (!cfg->mlx)
@@ -31,6 +31,7 @@ void	mlx_inits(t_cub3d* cfg)
 
 	printf("bits per pixel: %d\n", cfg->img_frame.pix_bits / 8);
 }
+
 void	img_pixel_put(t_img_frame *img, int x, int y, int color)
 {
 	char	*dst;
@@ -39,6 +40,7 @@ void	img_pixel_put(t_img_frame *img, int x, int y, int color)
 
 	*(unsigned int *)dst = color;
 }
+
 void	mlx_clear_image(t_img_frame *img)
 {
 	int	x;
@@ -56,6 +58,7 @@ void	mlx_clear_image(t_img_frame *img)
 		y++;
 	}
 }
+
 void	mlx_destroy_all(t_cub3d *cfg)
 {
 	if (cfg->img_frame.img)

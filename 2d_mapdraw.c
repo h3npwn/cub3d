@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   2d_mapdraw.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abahja <abahja@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mochajou <mochajou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 18:22:27 by abahja            #+#    #+#             */
-/*   Updated: 2025/12/27 18:30:54 by abahja           ###   ########.fr       */
+/*   Updated: 2025/12/27 21:14:13 by mochajou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,14 @@ void	draw_map2d(t_cub3d *cub3d)
 		{
 			cell = cub3d->map.grid[y][x];
 			color = (cell == '1') ? DARK_GRAY : BLACK;
-			draw_rectangle(&cub3d->img_frame, x * tile, y * tile, tile, tile, color);
+			draw_rectangle(&cub3d->img_frame, x * tile, y * tile,
+				tile, tile, color);
 			x++;
 		}
 		y++;
 	}
-	draw_circle(&cub3d->img_frame,
-		(int)(cub3d->player.posx * tile),
-		(int)(cub3d->player.posy * tile),
-		RED);
+	draw_circle(&cub3d->img_frame, (int)(cub3d->player.posx * tile),
+		(int)(cub3d->player.posy * tile), RED);
 	draw_line(&cub3d->img_frame,
 		(int)(cub3d->player.posx * tile),
 		(int)(cub3d->player.posy * tile),

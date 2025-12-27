@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   moves_mechanics.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abahja <abahja@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mochajou <mochajou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 18:24:25 by abahja            #+#    #+#             */
-/*   Updated: 2025/12/27 18:36:08 by abahja           ###   ########.fr       */
+/*   Updated: 2025/12/27 22:12:13 by mochajou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,26 +24,16 @@ void	player_rotation(t_cub3d *cub3d, double angle)
 	cub3d->player.plane_y = x * sin(angle) + cub3d->player.plane_y * cos(angle);
 }
 
-void	move_forward(t_cub3d *cub3d)
+void	move(t_cub3d *cub3d, double x, double y)
 {
-	cub3d->player.posx += cub3d->player.dir_x * M_SPEED;
-	cub3d->player.posy += cub3d->player.dir_y * M_SPEED;
-}
+	double	nx;
+	double	ny;
 
-void	move_backward(t_cub3d *cub3d)
-{
-	cub3d->player.posx -= cub3d->player.dir_x * M_SPEED;
-	cub3d->player.posy -= cub3d->player.dir_y * M_SPEED;
-}
+	nx = cub3d->player.posx + x * M_SPEED;
+	ny = cub3d->player.posy + y * M_SPEED;
+	if (cub3d->map.grid[(int)(cub3d->player.posy)][(int)(nx)] != '1')
+		cub3d->player.posx = nx;
+	if (cub3d->map.grid[(int)(ny)][(int)(cub3d->player.posx)] != '1')
+		cub3d->player.posy = ny;
 
-void	strafe_left(t_cub3d *cub3d)
-{
-	cub3d->player.posx -= cub3d->player.plane_x * M_SPEED;
-	cub3d->player.posy -= cub3d->player.plane_y * M_SPEED;
-}
-
-void	strafe_right(t_cub3d *cub3d)
-{
-	cub3d->player.posx += cub3d->player.plane_x * M_SPEED;
-	cub3d->player.posy += cub3d->player.plane_y * M_SPEED;
 }

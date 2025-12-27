@@ -69,12 +69,7 @@ void	draw_rectangle(
 
 void	draw_line(t_img_frame *img, int x0, int y0, int x1, int y1, int color)
 {
-	int	dx;
-	int	dy;
-	int	sx;
-	int	sy;
-	int	err;
-	int	err2;
+	int	dx,dy,sx,sy,err,err2;
 
 	dx = abs(x1 - x0);
 	dy = abs(y1 - y0);

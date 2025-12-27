@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abahja <abahja@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mochajou <mochajou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 18:38:00 by abahja            #+#    #+#             */
-/*   Updated: 2025/12/27 18:47:35 by abahja           ###   ########.fr       */
+/*   Updated: 2025/12/27 22:13:22 by mochajou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,7 @@ void	set_directions(t_cub3d *cfg);
 void	mlx_inits(t_cub3d *cfg);
 
 /*-------------player movements & events handle-------------*/
-void	move_backward(t_cub3d *cub3d);
-void	move_forward(t_cub3d *cub3d);
-void	strafe_left(t_cub3d *cub3d);
-void	strafe_right(t_cub3d *cub3d);
+void	move(t_cub3d *cub3d, double x, double y);
 void	player_rotation(t_cub3d *cub3d, double angle);
 void	apply_movements(t_cub3d *cub3d);
 int		key_press(int key, t_cub3d *cub3d);
