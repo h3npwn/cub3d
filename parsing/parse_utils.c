@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abahja <abahja@student-1337.ma>            +#+  +:+       +#+        */
+/*   By: abahja <abahja@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 00:26:34 by mochajou          #+#    #+#             */
-/*   Updated: 2025/12/25 23:44:59 by abahja           ###   ########.fr       */
+/*   Updated: 2025/12/27 18:41:04 by abahja           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-void	fill_rgb(color_t *color, char *line)
+void	fill_rgb(t_color *color, char *line)
 {
 	t_rawcolor buffer;
 

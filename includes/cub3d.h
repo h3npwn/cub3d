@@ -1,18 +1,29 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abahja <abahja@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/27 18:38:00 by abahja            #+#    #+#             */
+/*   Updated: 2025/12/27 18:47:35 by abahja           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
+
 # include "dependencies.h"
 # include "types.h"
 # include "settings.h"
 # include "keymapping.h"
-# include "../libft/libft.h"
-
 
 /*----- Parsing -----*/
 void	ft_init_map(t_cub3d *config);
 void	parse_map(t_cub3d *config, int fd);
 char	*skip_empty_lines(int fd);
 void	copy_map(t_map map);
-void	fill_rgb(color_t *color, char *line);
+void	fill_rgb(t_color *color, char *line);
 int		isvalid(char *line, t_cub3d	*config);
 char	*get_next_line(int fd);
 int		file_check(const char *file, const char *ext);
@@ -30,7 +41,7 @@ void	print_config(t_cub3d *cfg);
 /*----- Utils -----*/
 /*-------------------*/
 void	set_directions(t_cub3d *cfg);
-void	mlx_inits(t_cub3d* cfg);
+void	mlx_inits(t_cub3d *cfg);
 
 /*-------------player movements & events handle-------------*/
 void	move_backward(t_cub3d *cub3d);
@@ -44,16 +55,21 @@ int		key_release(int key, t_cub3d *cub3d);
 int		destroy_exit(t_cub3d *cub3d);
 void	draw_map2d(t_cub3d *cub3d);
 /*---------------------------------*/
+void	img_pixel_put(t_img_frame *img, int x, int y, int color);
+void	draw_circle(t_img_frame *img, int center_x, int center_y,
+			int color);
+void	draw_rectangle(t_img_frame *img, int x, int y,
+			int width, int height, int color);
+void	draw_line(t_img_frame *img, int x0, int y0,
+			int x1, int y1, int color);
+void	draw_player(t_player *player, t_cub3d *cub);
+void	mlx_draw_circle(void *mlx, void *win, int center_x,
+			int center_y, int color);
+void	mlx_draw_rectangle(void *mlx, void *win, int x, int y,
+			int width, int height, int color);
+void	mlx_draw_line(void *mlx, void *win, int x0, int y0,
+			int x1, int y1, int color);
+/*----------------------------------------*/
 
- void		img_pixel_put(t_img_frame *img, int x, int y, int color);
- void		draw_circle(t_img_frame *img, int center_x, int center_y, int color);
- void		draw_rectangle(t_img_frame *img, int x, int y, int width, int height, int color);
- void		draw_line(t_img_frame *img, int x0, int y0, int x1, int y1, int color);
- void		draw_player(t_player *player, t_cub3d *cub);
- void		mlx_draw_circle(void *mlx, void *win, int center_x, int center_y, int color);
- void		mlx_draw_rectangle(void *mlx, void *win, int x, int y, int width, int height, int color);
- void		mlx_draw_line(void *mlx, void *win, int x0, int y0, int x1, int y1, int color);
-
-/*-------------------*/
 
 #endif

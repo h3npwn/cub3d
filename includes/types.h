@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   types.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abahja <abahja@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/27 18:41:13 by abahja            #+#    #+#             */
+/*   Updated: 2025/12/27 18:47:04 by abahja           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef TYPES_H
 # define TYPES_H
 
@@ -17,7 +29,7 @@
 # define BROWN				0xA52A2A
 # define ORANGE				0xFFA500
 
-typedef unsigned long color_t;
+typedef unsigned long	t_color;
 
 // Linked list node for BFS
 typedef struct s_node
@@ -49,15 +61,15 @@ typedef struct s_img
 
 typedef struct s_rgb
 {
-    int	r;
-    int	g;
-    int	b;
+	int	r;
+	int	g;
+	int	b;
 }	t_rgb;
 typedef struct s_map
 {
-    char	**grid;
-    int		width;
-    int		height;
+	char	**grid;
+	int		width;
+	int		height;
 }	t_map;
 
 typedef struct s_texture
@@ -72,12 +84,12 @@ typedef struct s_texture
 
 typedef struct s_player
 {
-    double	posx;
-    double	posy;
-    double	dir_x;
-    double	dir_y;
-    double	plane_x;
-    double	plane_y;
+	double	posx;
+	double	posy;
+	double	dir_x;
+	double	dir_y;
+	double	plane_x;
+	double	plane_y;
 }	t_player;
 typedef struct s_rawcolor
 {
@@ -88,31 +100,31 @@ typedef struct s_rawcolor
 
 typedef struct s_movements
 {
-	char m_left;
-	char m_right;
-	char m_up;
-	char m_down;
-	char c_left;
-	char c_right;
-} t_movements;
+	char	m_left;
+	char	m_right;
+	char	m_up;
+	char	m_down;
+	char	c_left;
+	char	c_right;
+}	t_movements;
 
 typedef struct s_cub3d
 {
-    void        *mlx;
-    void        *win;
-    char        *map_path;
+	void		*mlx;
+	void		*win;
+	char		*map_path;
 	char		*north_path;
 	char		*south_path;
 	char		*west_path;
 	char		*east_path;
-	char 	  	initial_dir;
+	char		initial_dir;
 	t_movements	moves;
-	color_t		f_color;
-	color_t		c_color;
-    t_img_frame img_frame;
-    t_map       map;
-    t_texture   texture;
-    t_player    player;
-}   t_cub3d;
+	t_color		f_color;
+	t_color		c_color;
+	t_img_frame	img_frame;
+	t_map		map;
+	t_texture	texture;
+	t_player	player;
+}	t_cub3d;
 
 #endif

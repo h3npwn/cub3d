@@ -6,7 +6,7 @@
 /*   By: abahja <abahja@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 18:38:27 by abahja            #+#    #+#             */
-/*   Updated: 2025/12/27 18:38:39 by abahja           ###   ########.fr       */
+/*   Updated: 2025/12/27 18:46:23 by abahja           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int	render_frame(t_cub3d *cub3d)
 
 void	game(t_cub3d *cub3d)
 {
-	usleep(6000);
 	mlx_loop_hook(cub3d->mlx, render_frame, cub3d);
 	mlx_hook(cub3d->win, 2, 1L << 0, &key_press, cub3d);
 	mlx_hook(cub3d->win, 3, 1L << 1, &key_release, cub3d);
