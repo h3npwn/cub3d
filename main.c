@@ -1,4 +1,5 @@
 #include "includes/cub3d.h"
+#include "includes/cub_mlx.h"
 #include "includes/types.h"
 #include "libft/libft.h"
 
@@ -10,6 +11,7 @@ void init_game(char **argv, t_cub3d *cub3d)
     ft_init_map(cub3d);
 	set_directions(cub3d);
     mlx_inits(cub3d);
+    mlx_destroy_all(cub3d);
     //exit(1);
 }
 

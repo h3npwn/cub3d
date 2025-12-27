@@ -7,7 +7,6 @@
 # include "../libft/libft.h"
 
 
-
 /*----- Parsing -----*/
 void	ft_init_map(t_cub3d *config);
 void	parse_map(t_cub3d *config, int fd);

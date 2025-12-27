@@ -12,5 +12,6 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include "../libft/libft.h"
+# include "cub_mlx.h"
 
 #endif
