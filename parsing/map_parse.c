@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_parse.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abahja <abahja@student-1337.ma>            +#+  +:+       +#+        */
+/*   By: mochajou <mochajou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 18:47:59 by abahja            #+#    #+#             */
-/*   Updated: 2025/12/25 23:41:40 by abahja           ###   ########.fr       */
+/*   Updated: 2025/12/29 23:44:49 by mochajou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,27 +52,29 @@ void	copy_map(t_map map)
 	bfs(map, new_grid, 0, 0);
 	check_inside_map(map, new_grid);
 }
-void	detect_player_position(char *line, t_cub3d *config, int y)
-{
-	int	x;
 
-	x = 0;
-	while (line[x])
-	{
-		if (line[x] == 'N' || line[x] == 'S' || line[x] == 'E' || line[x] == 'W')
-		{
-			if (config->initial_dir != 0)
-				exit_failure(ERR_CONFIG, 1);
-			config->initial_dir = line[x];
-			config->player.posx = x + 0.5;
-			config->player.posy = y + 0.5;
-			line[x] = '0';
-			break;
-		}
-		x++;
-	}
-}
-void	combine_chunks(t_list *chunks, t_cub3d *config, int count_lines)
+// void	detect_player_position(char *line, t_cub3d *config, int y)
+// {
+// 	int	x;
+
+// 	x = 0;
+// 	while (line[x])
+// 	{
+// 		if (line[x] == 'N' || line[x] == 'S' || line[x] == 'E' || line[x] == 'W')
+// 		{
+// 			if (config->initial_dir != 0)
+// 				exit_failure(ERR_CONFIG, 1);
+// 			config->initial_dir = line[x];
+// 			config->player.posx = x + 0.5;
+// 			config->player.posy = y + 0.5;
+// 			line[x] = '0';
+// 			break ;
+// 		}
+// 		x++;
+// 	}
+// }
+
+void	combine_chunks(t_list *chunks, t_cub3d *config)
 {
 	t_list	*current;
 	size_t	pifon;
@@ -82,18 +84,16 @@ void	combine_chunks(t_list *chunks, t_cub3d *config, int count_lines)
 	pifon = 0;
 	current = chunks;
 	i = 0;
-	rows = heap_manager(sizeof(char *) * (count_lines + 1), 'a', 0);
+	rows = heap_manager(sizeof(char *) * (config->map.height + 1), 'a', 0);
 	while (current)
 	{
 		rows[i] = (char *)current->content;
 		if (ft_strlen(rows[i]) > pifon)
 			pifon = ft_strlen(rows[i]);
-		detect_player_position(rows[i], config, i);
 		current->content = NULL;
 		current = current->next;
 		i++;
 	}
-	config->map.height = count_lines;
 	config->map.width = pifon;
 	config->map.grid = rows;
 	config->map.grid[config->map.height] = NULL;
@@ -103,22 +103,17 @@ void	combine_chunks(t_list *chunks, t_cub3d *config, int count_lines)
 void	parse_map(t_cub3d *config, int fd)
 {
 	t_list	*chunks;
-	int		line_count;
 	char	*line;
-	int		row;
 
-	line_count = 0;
 	chunks = NULL;
 	line = skip_empty_lines(fd);
-	row = 0;
 	while (line)
 	{
 		if (line && *line == '\n')
 			break ;
 		check_chars(line, config);
 		ft_lstadd_back(&chunks, ft_lstnew(line));
-		line_count++;
-		row++;
+		config->map.height++;
 		line = get_next_line(fd);
 	}
 	while (line)
@@ -127,8 +122,8 @@ void	parse_map(t_cub3d *config, int fd)
 		if (line && *line != '\n')
 			exit_failure(ERR_CONFIG, 1);
 	}
-	if (line_count == 0)
+	if (config->map.height == 0)
 		exit_failure(3, 1);
-	combine_chunks(chunks, config, line_count);
+	combine_chunks(chunks, config);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abahja <abahja@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mochajou <mochajou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 00:26:34 by mochajou          #+#    #+#             */
-/*   Updated: 2025/12/27 18:41:04 by abahja           ###   ########.fr       */
+/*   Updated: 2025/12/29 22:37:55 by mochajou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,6 @@ void	ft_init_map(t_cub3d *config)
 	if (!file_check(config->map_path, ".cub") || fd < 0)
 		exit_failure(ERR_FILE, 1);
 	read_path_texture(fd, config);
-	//print_config(config);
 	parse_map(config, fd);
 	copy_map(config->map);
 	close(fd);

@@ -6,7 +6,7 @@
 /*   By: mochajou <mochajou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 18:38:00 by abahja            #+#    #+#             */
-/*   Updated: 2025/12/27 22:13:22 by mochajou         ###   ########.fr       */
+/*   Updated: 2025/12/30 00:00:22 by mochajou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*get_next_line(int fd);
 int		file_check(const char *file, const char *ext);
 void	read_path_texture(int fd, t_cub3d *config);
 void	detect_player_position(char *line, t_cub3d *config, int y);
-void	combine_chunks(t_list *chunks, t_cub3d *config, int count_lines);
+void	combine_chunks(t_list *chunks, t_cub3d *config);
 void	print_config(t_cub3d *config);
 void	exit_failure(int code, int isnoexit);
 t_cub3d	*init(char **av, t_cub3d *cub);
@@ -55,18 +55,15 @@ void	draw_map2d(t_cub3d *cub3d);
 void	img_pixel_put(t_img_frame *img, int x, int y, int color);
 void	draw_circle(t_img_frame *img, int center_x, int center_y,
 			int color);
-void	draw_rectangle(t_img_frame *img, int x, int y,
-			int width, int height, int color);
+void	draw_rectangle(t_img_frame *img, int x, int y, int color);
 void	draw_line(t_img_frame *img, int x0, int y0,
 			int x1, int y1, int color);
 void	draw_player(t_player *player, t_cub3d *cub);
 void	mlx_draw_circle(void *mlx, void *win, int center_x,
 			int center_y, int color);
-void	mlx_draw_rectangle(void *mlx, void *win, int x, int y,
-			int width, int height, int color);
 void	mlx_draw_line(void *mlx, void *win, int x0, int y0,
 			int x1, int y1, int color);
 /*----------------------------------------*/
-
+void	cast_rays(t_cub3d *cub3d);
 
 #endif

@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abahja <abahja@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mochajou <mochajou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 18:41:13 by abahja            #+#    #+#             */
-/*   Updated: 2025/12/27 18:47:04 by abahja           ###   ########.fr       */
+/*   Updated: 2025/12/29 19:31:18 by mochajou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TYPES_H
 # define TYPES_H
-
+# define X					0
+# define Y					1
 # define WHITE				0xFFFFFF
 # define PURPLE				0x800080
 # define DARK_GRAY			0x404040
@@ -108,6 +109,17 @@ typedef struct s_movements
 	char	c_right;
 }	t_movements;
 
+typedef struct s_ray
+{
+	double	dir[2];
+	double	side_dist[2];
+	double	delta_dist[2];
+	int		map[2];
+	int		steps[2];
+	int		hit;
+	int		side;
+}	t_ray;
+
 typedef struct s_cub3d
 {
 	void		*mlx;
@@ -118,6 +130,7 @@ typedef struct s_cub3d
 	char		*west_path;
 	char		*east_path;
 	char		initial_dir;
+	t_ray		ray;
 	t_movements	moves;
 	t_color		f_color;
 	t_color		c_color;

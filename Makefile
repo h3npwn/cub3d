@@ -2,7 +2,7 @@
 .PHONY: all libft mlx engine clean fclean re
 
 CC = cc
-CFLAGS := -g #-Wall -Wextra -Werror 
+CFLAGS := -g -Wall -Wextra -Werror 
 
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
@@ -20,7 +20,7 @@ ENGINE_SRCS = parsing/bfs_utils.c parsing/parse_utils.c parsing/map_parse.c  par
 				player_mechanics/key_handlers.c \
 				mlx_inits.c \
 				mlx_draw_utils.c \
-				2d_mapdraw.c
+				2d_mapdraw.c raycast.c \
 
 ENGINE_OBJS = $(ENGINE_SRCS:.c=.o)
 ENGINE_BIN = cub3d

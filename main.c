@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abahja <abahja@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mochajou <mochajou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 18:38:27 by abahja            #+#    #+#             */
-/*   Updated: 2025/12/27 18:46:23 by abahja           ###   ########.fr       */
+/*   Updated: 2025/12/30 00:06:05 by mochajou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,29 @@ void	init_game(char **argv, t_cub3d *cub3d)
 	mlx_inits(cub3d);
 }
 
+void	draw_plane_vector(t_cub3d *cub3d)
+{
+	int	tile;
+	int	x0;
+	int	y0;
+	int	x1;
+	int	y1;
+
+	tile = TILE_SIZE;
+	x0 = (int)(cub3d->player.posx * tile);
+	y0 = (int)(cub3d->player.posy * tile);
+	x1 = (int)((cub3d->player.posx + cub3d->player.plane_x * 0.8) * tile);
+	y1 = (int)((cub3d->player.posy + cub3d->player.plane_y * 0.8) * tile);
+	draw_line(&cub3d->img_frame, x0, y0, x1, y1, GREEN);
+}
+
 int	render_frame(t_cub3d *cub3d)
 {
 	mlx_clear_image(&cub3d->img_frame);
 	apply_movements(cub3d);
 	draw_map2d(cub3d);
+	draw_plane_vector(cub3d);
+	cast_rays(cub3d);
 	mlx_put_image_to_window(cub3d->mlx, cub3d->win, cub3d->img_frame.img, 0, 0);
 	return (0);
 }
@@ -46,6 +64,7 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		exit_failure(ERR_ARGC, 1);
 	init_game(argv, &cub3d);
+	print_config(&cub3d);
 	game(&cub3d);
 	return (0);
 }
