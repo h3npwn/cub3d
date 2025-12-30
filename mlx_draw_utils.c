@@ -1,7 +1,6 @@
 #include "includes/cub3d.h"
 #include "includes/types.h"
 #include <stdlib.h>
-#include <mlx.h>
 
 /*
 ** ======================================
@@ -42,10 +41,10 @@ void	draw_rectangle(t_img_frame *img, int x, int y, int color)
 	int	j;
 
 	i = 0;
-	while (i < TILE_SIZE)
+	while (i < TILE_SIZE - 1)
 	{
 		j = 0;
-		while (j < TILE_SIZE)
+		while (j < TILE_SIZE - 1)
 		{
 			img_pixel_put(img, x + j, y + i, color);
 			j++;

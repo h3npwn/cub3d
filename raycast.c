@@ -6,7 +6,7 @@
 /*   By: mochajou <mochajou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/29 23:41:19 by mochajou          #+#    #+#             */
-/*   Updated: 2025/12/30 00:07:52 by mochajou         ###   ########.fr       */
+/*   Updated: 2025/12/30 15:25:19 by mochajou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	init_ray(t_cub3d *cub3d, int x)
 	cub3d->ray.dir[Y] = cub3d->player.dir_y + cub3d->player.plane_y * cam_x;
 	cub3d->ray.map[X] = cub3d->player.posx;
 	cub3d->ray.map[Y] = cub3d->player.posy;
-	cub3d->ray.hit = 0;
 	cub3d->ray.delta_dist[X] = 1e30;
 	cub3d->ray.delta_dist[Y] = 1e30;
 	if (cub3d->ray.dir[X] != 0)
@@ -30,30 +29,28 @@ void	init_ray(t_cub3d *cub3d, int x)
 		cub3d->ray.delta_dist[Y] = fabs(1.0 / cub3d->ray.dir[Y]);
 }
 
-void	compelete_dda_utils(t_ray *ray, int axis, double pos)
+void	compelete_dda_utils(t_ray *ray, int ax, double pos)
 {
-	if (ray->dir[axis] < 0)
+	if (ray->dir[ax] < 0)
 	{
-		ray->steps[axis] = -1;
-		ray->side_dist[axis] = (pos
-				- ray->map[axis]) * ray->delta_dist[axis];
+		ray->steps[ax] = -1;
+		ray->side_dist[ax] = (pos - ray->map[ax]) * ray->delta_dist[ax];
 	}
 	else
 	{
-		ray->steps[axis] = 1;
-		ray->side_dist[axis] = (ray->map[axis] + 1.0
-				- pos) * ray->delta_dist[axis];
+		ray->steps[ax] = 1;
+		ray->side_dist[ax] = (ray->map[ax] + 1.0 - pos) * ray->delta_dist[ax];
 	}
 }
 
-void	dda_utils(t_cub3d *cub3d)
+double	dda_utils(t_cub3d *cub3d)
 {
 	t_ray	*ray;
 
 	ray = &cub3d->ray;
 	compelete_dda_utils(ray, X, cub3d->player.posx);
 	compelete_dda_utils(ray, Y, cub3d->player.posy);
-	while (!ray->hit)
+	while (1336)
 	{
 		if (ray->side_dist[X] < ray->side_dist[Y])
 		{
@@ -68,8 +65,11 @@ void	dda_utils(t_cub3d *cub3d)
 			ray->side = 1;
 		}
 		if (cub3d->map.grid[ray->map[Y]][ray->map[X]] == '1')
-			ray->hit = 1;
+			break ;
 	}
+	if (ray->side == 0)
+		return (ray->side_dist[X] - ray->delta_dist[X]);
+	return (ray->side_dist[Y] - ray->delta_dist[Y]);
 }
 
 void	cast_rays(t_cub3d *cub3d)
@@ -83,11 +83,7 @@ void	cast_rays(t_cub3d *cub3d)
 	while (x < WIN_WIDTH)
 	{
 		init_ray(cub3d, x);
-		dda_utils(cub3d);
-		if (cub3d->ray.side == 0)
-			perp_wall_dist = cub3d->ray.side_dist[X] - cub3d->ray.delta_dist[X];
-		else
-			perp_wall_dist = cub3d->ray.side_dist[Y] - cub3d->ray.delta_dist[Y];
+		perp_wall_dist = dda_utils(cub3d);
 		start[X] = (int)(cub3d->player.posx * TILE_SIZE);
 		start[Y] = (int)(cub3d->player.posy * TILE_SIZE);
 		end[X] = (int)((cub3d->player.posx

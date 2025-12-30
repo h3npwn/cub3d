@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abahja <abahja@student-1337.ma>            +#+  +:+       +#+        */
+/*   By: mochajou <mochajou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 15:07:50 by mochajou          #+#    #+#             */
-/*   Updated: 2025/12/25 23:22:23 by abahja           ###   ########.fr       */
+/*   Updated: 2025/12/30 15:14:22 by mochajou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/libft.h"
-#include <stdio.h>
 
 char	*new_line(char *s)
 {
@@ -35,7 +34,7 @@ static char	*no_newline(char **l3mara)
 	char	*line;
 
 	line = ft_strdup(*l3mara);
-	heap_manager(0,'r',*l3mara);
+	heap_manager(0, 'r', *l3mara);
 	*l3mara = NULL;
 	return (line);
 }

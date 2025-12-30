@@ -6,7 +6,7 @@
 /*   By: mochajou <mochajou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 18:22:27 by abahja            #+#    #+#             */
-/*   Updated: 2025/12/30 00:02:23 by mochajou         ###   ########.fr       */
+/*   Updated: 2025/12/30 14:22:31 by mochajou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,13 @@ void	draw_map2d(t_cub3d *cub3d)
 		while (cub3d->map.grid[y][x])
 		{
 			cell = cub3d->map.grid[y][x];
-			color = (cell == '1') ? DARK_GRAY : BLACK;
-			draw_rectangle(&cub3d->img_frame, x * TILE_SIZE, y * TILE_SIZE, color);
+			if (cell == '1')
+				color = DARK_GRAY;
+			else if (cell == '0')
+				color = LIGHT_GRAY;
+			else
+				color = BLACK;
+			draw_rectangle(&cub3d->img_frame, x * (TILE_SIZE), y * (TILE_SIZE), color);
 			x++;
 		}
 		y++;

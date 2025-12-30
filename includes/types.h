@@ -6,7 +6,7 @@
 /*   By: mochajou <mochajou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 18:41:13 by abahja            #+#    #+#             */
-/*   Updated: 2025/12/29 19:31:18 by mochajou         ###   ########.fr       */
+/*   Updated: 2025/12/30 15:25:31 by mochajou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,6 @@ typedef struct s_ray
 	double	delta_dist[2];
 	int		map[2];
 	int		steps[2];
-	int		hit;
 	int		side;
 }	t_ray;
 
