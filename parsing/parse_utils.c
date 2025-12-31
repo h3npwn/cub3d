@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mochajou <mochajou@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: abahja <abahja@student-1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 00:26:34 by mochajou          #+#    #+#             */
-/*   Updated: 2025/12/29 22:37:55 by mochajou         ###   ########.fr       */
+/*   Updated: 2025/12/31 19:05:21 by abahja           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,13 @@ int	isvalid(char *line, t_cub3d	*config)
 			else if (*line == 'F')
 				fill_rgb(&config->f_color, line + 2);
 			else if (*line == 'S')
-				config->south_path = ft_strdup(line + 3);
+				config->south_path = ft_substr(line, 3, ft_strlen(line) - 4);
 			else if (*line == 'N')
-				config->north_path = ft_strdup(line + 3);
+				config->north_path = ft_substr(line, 3, ft_strlen(line) - 4);
 			else if (*line == 'E')
-				config->east_path = ft_strdup(line + 3);
+				config->east_path = ft_substr(line, 3, ft_strlen(line) - 4);
 			else if (*line == 'W')
-				config->west_path = ft_strdup(line + 3);
+				config->west_path = ft_substr(line, 3, ft_strlen(line) - 4);
 			return (i + 1);
 		}
 		i++;

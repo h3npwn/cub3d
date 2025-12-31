@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_inits.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mochajou <mochajou@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: abahja <abahja@student-1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 00:44:42 by abahja            #+#    #+#             */
-/*   Updated: 2025/12/27 20:57:42 by mochajou         ###   ########.fr       */
+/*   Updated: 2025/12/31 19:27:43 by abahja           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,14 @@ void	mlx_clear_image(t_img_frame *img)
 
 void	mlx_destroy_all(t_cub3d *cfg)
 {
+	int  i = 0;
+
+	while (i < 4)
+	{
+		if (cfg->tex[i].img)
+			mlx_destroy_image(cfg->mlx, cfg->tex[i].img);
+		i++;
+	}
 	if (cfg->img_frame.img)
 		mlx_destroy_image(cfg->mlx, cfg->img_frame.img);
 	if (cfg->win)

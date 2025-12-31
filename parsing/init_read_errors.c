@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_read_errors.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mochajou <mochajou@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: abahja <abahja@student-1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 23:42:40 by abahja            #+#    #+#             */
-/*   Updated: 2025/12/29 23:18:31 by mochajou         ###   ########.fr       */
+/*   Updated: 2025/12/31 19:15:50 by abahja           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	exit_failure(int code, int isnoexit)
 		"Error\nMemory allocation failed.\n",
 		"Error\nInvalid map format.\n",
 		"Error\nInitialization failed.\n",
+		"Error\nTexture file invalid.\n",
 		"Error\nUnknown error occurred.\n"
 	};
 

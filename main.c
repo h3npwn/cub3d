@@ -6,21 +6,53 @@
 /*   By: abahja <abahja@student-1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 18:38:27 by abahja            #+#    #+#             */
-/*   Updated: 2025/12/31 18:12:09 by abahja           ###   ########.fr       */
+/*   Updated: 2025/12/31 19:27:45 by abahja           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/cub3d.h"
+#include <mlx.h>
 
+
+void	load_textures(t_cub3d *cub3d);
 void	init_game(char **argv, t_cub3d *cub3d)
 {
 	ft_memset(cub3d, 0, sizeof(t_cub3d));
 	cub3d->map_path = argv[1];
 	ft_init_map(cub3d);
-	set_directions(cub3d);
 	mlx_inits(cub3d);
+	load_textures(cub3d);
+	set_directions(cub3d);
 }
-
+void	load_textures(t_cub3d *cub3d)
+{
+	const char *paths[4] = {
+		cub3d->north_path,
+		cub3d->south_path,
+		cub3d->west_path,
+		cub3d->east_path
+	};
+	int i;
+	// ft_memset(cub3d->tex, 0, sizeof(t_img_frame) * 4);
+	i = 0;
+	while (i < 4)
+	{
+		cub3d->tex[i].img = mlx_xpm_file_to_image(cub3d->mlx, (char *)paths[i], &cub3d->tex[i].width, &cub3d->tex[i].height);
+		if (!cub3d->tex[i].img)
+		{
+			mlx_destroy_all(cub3d);
+			// exit(1);
+			exit_failure(ERR_TEXTURE, 1);
+		}
+		cub3d->tex[i].addr = mlx_get_data_addr(cub3d->tex[i].img, &cub3d->tex[i].pix_bits, &cub3d->tex[i].size_line, &cub3d->tex[i].endian);
+		if (!cub3d->tex[i].addr)
+		{
+			mlx_destroy_all(cub3d);
+			exit_failure(ERR_TEXTURE, 1);
+		}
+		i++;
+	}
+}
 void	draw_plane_vector(t_cub3d *cub3d)
 {
 	int	tile;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mochajou <mochajou@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: abahja <abahja@student-1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 18:41:13 by abahja            #+#    #+#             */
-/*   Updated: 2025/12/30 15:25:31 by mochajou         ###   ########.fr       */
+/*   Updated: 2025/12/31 19:16:06 by abahja           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@
 # define GRAY				0x808080
 # define BROWN				0xA52A2A
 # define ORANGE				0xFFA500
-
+# define N 0
+# define S 1
+# define W 2
+# define E 3
 typedef unsigned long	t_color;
 
 // Linked list node for BFS
@@ -48,6 +51,7 @@ typedef enum e_error
 	ERR_MALLOC,
 	ERR_MAP,
 	ERR_INIT,
+	ERR_TEXTURE,
 	ERR_UNKNOWN
 }	t_error;
 
@@ -56,9 +60,13 @@ typedef struct s_img
 	void	*img;
 	void	*addr;
 	int		endian;
+	int		width;
+	int		height;
 	int		pix_bits;
 	int		size_line;
 }			t_img_frame;
+
+
 
 typedef struct s_rgb
 {
@@ -73,15 +81,6 @@ typedef struct s_map
 	int		height;
 }	t_map;
 
-typedef struct s_texture
-{
-	int		size;
-	int		index;
-	int		x;
-	int		y;
-	double	step;
-	double	pos;
-}					t_texture;
 
 typedef struct s_player
 {
@@ -134,8 +133,9 @@ typedef struct s_cub3d
 	t_color		f_color;
 	t_color		c_color;
 	t_img_frame	img_frame;
+	t_img_frame tex[4];
 	t_map		map;
-	t_texture	texture;
+	// t_texture	texture;
 	t_player	player;
 }	t_cub3d;
 
