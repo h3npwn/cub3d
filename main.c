@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mochajou <mochajou@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: abahja <abahja@student-1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 18:38:27 by abahja            #+#    #+#             */
-/*   Updated: 2025/12/30 00:06:05 by mochajou         ###   ########.fr       */
+/*   Updated: 2025/12/31 18:12:09 by abahja           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	render_frame(t_cub3d *cub3d)
 	draw_map2d(cub3d);
 	draw_plane_vector(cub3d);
 	cast_rays(cub3d);
+	// draw_walls(cub3d);
 	mlx_put_image_to_window(cub3d->mlx, cub3d->win, cub3d->img_frame.img, 0, 0);
 	return (0);
 }
