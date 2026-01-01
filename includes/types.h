@@ -29,10 +29,11 @@
 # define GRAY				0x808080
 # define BROWN				0xA52A2A
 # define ORANGE				0xFFA500
-# define N 0
-# define S 1
-# define W 2
-# define E 3
+
+# define TEX_N				0
+# define TEX_S				1
+# define TEX_W				2
+# define TEX_E				3
 typedef unsigned long	t_color;
 
 // Linked list node for BFS
@@ -58,7 +59,7 @@ typedef enum e_error
 typedef struct s_img
 {
 	void	*img;
-	void	*addr;
+	char	*addr;
 	int		endian;
 	int		width;
 	int		height;
@@ -113,6 +114,7 @@ typedef struct s_ray
 	double	dir[2];
 	double	side_dist[2];
 	double	delta_dist[2];
+	double	perp_dist;
 	int		map[2];
 	int		steps[2];
 	int		side;

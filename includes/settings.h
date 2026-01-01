@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   settings.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mochajou <mochajou@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: abahja <abahja@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/26 11:34:56 by abahja            #+#    #+#             */
-/*   Updated: 2025/12/28 22:00:19 by mochajou         ###   ########.fr       */
+/*   Updated: 2026/01/01 22:36:56 by abahja           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,6 @@
 # define CEILING_COLOR "C "
 
 # define M_SPEED 0.01
-# define R_SPEED 0.01
+# define R_SPEED 0.02
 
 #endif

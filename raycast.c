@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abahja <abahja@student-1337.ma>            +#+  +:+       +#+        */
+/*   By: abahja <abahja@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/29 23:41:19 by mochajou          #+#    #+#             */
-/*   Updated: 2025/12/31 18:39:49 by abahja           ###   ########.fr       */
+/*   Updated: 2026/01/01 23:00:20 by abahja           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,45 +72,102 @@ double	dda_utils(t_cub3d *cub3d)
 		return (ray->side_dist[X] - ray->delta_dist[X]);
 	return (ray->side_dist[Y] - ray->delta_dist[Y]);
 }
+void	f_c_paint(t_cub3d *cub3d, int x)
+{
+	int	y;
+
+	y = 0;
+	while (y < WIN_HEIGHT / 2)
+	{
+		img_pixel_put(&cub3d->img_frame, x, y, cub3d->c_color);
+		y++;
+	}
+	while (y < WIN_HEIGHT)
+	{
+		img_pixel_put(&cub3d->img_frame, x, y, cub3d->f_color);
+		y++;
+	}
+}
+int	calculate_start_end(int line_height, int *draw_start, int *draw_end)
+{
+	*draw_start = (WIN_HEIGHT - line_height ) / 2;
+	if (*draw_start < 0)
+		*draw_start = 0;
+
+	*draw_end = *draw_start + line_height;
+	if (*draw_end >= WIN_HEIGHT)
+		*draw_end = WIN_HEIGHT;;
+	return (0);
+}
+
+static int	select_texture(t_ray *ray)
+{
+	if (ray->side == 0)
+	{
+		if (ray->dir[X] > 0)
+			return (TEX_W);
+		return (TEX_E);
+	}
+	if (ray->dir[Y] > 0)
+		return (TEX_N);
+	return (TEX_S);
+}
+
+static unsigned int	get_tex_color(t_img_frame *tex, int tex_x, int tex_y)
+{
+	char	*src;
+
+	if (tex_x < 0 || tex_x >= tex->width)
+		tex_x = (tex_x < 0) * tex->width;
+	if (tex_y < 0 || tex_y >= tex->height)
+		tex_y = (tex_y < 0) * tex->height;
+	src = tex->addr + (tex_y * tex->size_line + tex_x * (tex->pix_bits / 8));
+	return (*(unsigned int *)src);
+}
+
 void 	draw_walls(t_cub3d *cub3d, int x, double perp_wall_dist)
 {
-	int	line_height;
-	int	draw_start;
-	int	draw_end;
-	int c_color;
-	int f_color;
+	t_ray			*ray;
+	t_img_frame		*tex;
+	double			wall_x;
+	double			step;
+	double			tex_pos;
+	int				line_height;
+	int				draw_start;
+	int				draw_end;
+	int				tex_x;
+	int				tex_y;
+	unsigned int	color;
 
-
-	c_color = GREEN;
-	f_color = BLUE;
-	// Draw ceiling
-	for (int y = 0; y < WIN_HEIGHT / 2; y++)
-	{
-		img_pixel_put(&cub3d->img_frame, x, y, c_color);
-		// mlx_put_image_to_window(cub3d->mlx, cub3d->win, cub3d->img_frame.img, 0, 0);
-	}	
-	// Draw floor
-	for (int y = WIN_HEIGHT / 2; y < WIN_HEIGHT; y++)
-	{
-		img_pixel_put(&cub3d->img_frame, x, y, f_color);
-		// mlx_put_image_to_window(cub3d->mlx, cub3d->win, cub3d->img_frame.img, 0, 0);
-		
-	}
+	f_c_paint(cub3d, x);
+	ray = &cub3d->ray;
+	if (perp_wall_dist <= 0.0)
+		perp_wall_dist = 0.0001;
 	line_height = (int)(WIN_HEIGHT / perp_wall_dist);
-	draw_start = -line_height / 2 + WIN_HEIGHT / 2;
-	if (draw_start < 0)
-	draw_start = 0;
-	draw_end = line_height / 2 + WIN_HEIGHT / 2;
-	if (draw_end >= WIN_HEIGHT)
-	draw_end = WIN_HEIGHT - 1;
-	draw_line(&cub3d->img_frame, x, draw_start, x, draw_end, RED);
+	calculate_start_end(line_height, &draw_start, &draw_end);
+	if (ray->side == 0)
+		wall_x = cub3d->player.posy + perp_wall_dist * ray->dir[Y];
+	else
+		wall_x = cub3d->player.posx + perp_wall_dist * ray->dir[X];
+	wall_x -= floor(wall_x);
+	tex = &cub3d->tex[select_texture(ray)];
+	tex_x = (int)(wall_x * (double)(tex->width));
+	step = (double)tex->height / line_height;
+	tex_pos = (draw_start - WIN_HEIGHT / 2 + line_height / 2) * step;
+	while (draw_start < draw_end)
+	{
+		tex_y = (int)tex_pos;
+		tex_pos += step;
+		color = get_tex_color(tex, tex_x, tex_y);
+		img_pixel_put(&cub3d->img_frame, x, draw_start, color);
+		draw_start++;
+	}
 }
+
 void	cast_rays(t_cub3d *cub3d)
 {
 	double	perp_wall_dist;
 	int		x;
-	// int		start[2];
-	// int		end[2];
 
 	x = 0;
 	while (x < WIN_WIDTH)
@@ -118,13 +175,6 @@ void	cast_rays(t_cub3d *cub3d)
 		init_ray(cub3d, x);
 		perp_wall_dist = dda_utils(cub3d);
 		draw_walls(cub3d, x, perp_wall_dist);
-		// start[X] = (int)(cub3d->player.posx * TILE_SIZE);
-		// start[Y] = (int)(cub3d->player.posy * TILE_SIZE);
-		// end[X] = (int)((cub3d->player.posx
-		// 			+ cub3d->ray.dir[X] * perp_wall_dist) * TILE_SIZE);
-		// end[Y] = (int)((cub3d->player.posy
-		// 			+ cub3d->ray.dir[Y] * perp_wall_dist) * TILE_SIZE);
-		// draw_line(&cub3d->img_frame, start[X], start[Y], end[X], end[Y], RED);
 		x++;
 	}
 }
