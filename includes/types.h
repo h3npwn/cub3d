@@ -30,10 +30,10 @@
 # define BROWN				0xA52A2A
 # define ORANGE				0xFFA500
 
-# define TEX_N				0
-# define TEX_S				1
-# define TEX_W				2
-# define TEX_E				3
+# define TEX_S				0
+# define TEX_N				1
+# define TEX_E				2
+# define TEX_W				3
 
 typedef unsigned long	t_color;
 

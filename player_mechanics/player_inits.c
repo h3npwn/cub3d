@@ -22,14 +22,14 @@ static void	ft_setdirs_ew(t_cub3d *cfg)
 		cfg->player.dir[X] = 1;
 		cfg->player.dir[Y] = 0;
 		cfg->player.plane[X] = 0;
-		cfg->player.plane[Y] = -plane;
+		cfg->player.plane[Y] = plane;
 	}
 	else if (cfg->initial_dir == 'W')
 	{
 		cfg->player.dir[X] = -1;
 		cfg->player.dir[Y] = 0;
 		cfg->player.plane[X] = 0;
-		cfg->player.plane[Y] = plane;
+		cfg->player.plane[Y] = -plane;
 	}
 }
 
@@ -49,7 +49,7 @@ static void	ft_setdirs_ns(t_cub3d *cfg)
 	{
 		cfg->player.dir[X] = 0;
 		cfg->player.dir[Y] = 1;
-		cfg->player.plane[X] = 1;
+		cfg->player.plane[X] = -plane;
 		cfg->player.plane[Y] = 0;
 	}
 }

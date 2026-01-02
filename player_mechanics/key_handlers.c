@@ -73,7 +73,7 @@ void	apply_movements(t_cub3d *cub3d)
 	if (cub3d->moves.m_left)
 		move(cub3d, -cub3d->player.plane[X], -cub3d->player.plane[Y]);
 	if (cub3d->moves.c_left)
-		player_rotation(cub3d, R_SPEED);
-	if (cub3d->moves.c_right)
 		player_rotation(cub3d, -R_SPEED);
+	if (cub3d->moves.c_right)
+		player_rotation(cub3d, R_SPEED);
 }
