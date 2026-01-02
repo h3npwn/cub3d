@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abahja <abahja@student-1337.ma>            +#+  +:+       +#+        */
+/*   By: mochajou <mochajou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 00:26:34 by mochajou          #+#    #+#             */
-/*   Updated: 2025/12/31 19:05:21 by abahja           ###   ########.fr       */
+/*   Updated: 2026/01/02 22:22:45 by mochajou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	fill_rgb(t_color *color, char *line)
 {
-	t_rawcolor buffer;
+	t_rawcolor	buffer;
 
 	buffer.r = (unsigned char)ft_atoi(line);
 	line += 2;
@@ -104,8 +104,7 @@ void	check_inside_map(t_map map, char **copy)
 void	ft_init_map(t_cub3d *config)
 {
 	int	fd;
-	fd = -1;
-	printf("Starting configuration setup...\n");
+
 	fd = open(config->map_path, O_RDONLY);
 	if (!file_check(config->map_path, ".cub") || fd < 0)
 		exit_failure(ERR_FILE, 1);

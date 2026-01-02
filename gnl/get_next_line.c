@@ -6,7 +6,7 @@
 /*   By: mochajou <mochajou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 15:07:50 by mochajou          #+#    #+#             */
-/*   Updated: 2025/12/30 15:14:22 by mochajou         ###   ########.fr       */
+/*   Updated: 2026/01/02 22:27:34 by mochajou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,10 @@ char	*t3mar(int fd, char **l3mara)
 				*l3mara = ft_strdup(buff);
 			else
 				*l3mara = ft_strjoin(*l3mara, buff);
-			heap_manager(0,'r',tmp);
+			heap_manager(0, 'r', tmp);
 		}
 	}
-	heap_manager(0,'r',buff);
-
+	heap_manager(0, 'r', buff);
 	return (*l3mara);
 }
 
@@ -78,12 +77,12 @@ char	*get_next_line(int fd)
 	new_l = new_line(l3mara);
 	if (new_l)
 	{
-		line = ft_substr(l3mara, 0,(new_l - l3mara + 1));
+		line = ft_substr(l3mara, 0, (new_l - l3mara + 1));
 		new_l = ft_strdup(new_l + 1);
-		heap_manager(0,'r',l3mara);
+		heap_manager(0, 'r', l3mara);
 		if (*new_l == '\0')
 		{
-			heap_manager(0,'r',new_l);
+			heap_manager(0, 'r', new_l);
 			l3mara = NULL;
 		}
 		else
@@ -93,24 +92,3 @@ char	*get_next_line(int fd)
 		line = no_newline(&l3mara);
 	return (line);
 }
-
-// #include <fcntl.h>
-// #include <stdio.h>
-// int main()
-// {
-// 	int fd = open("file", O_RDWR);
-// 	// exit(1);
-// 	char *line = get_next_line(fd);
-// 	printf("%d %s \n", fd, line);
-// 	int i = 1;
-// 	while (line)
-// 	{
-// 		printf("%s", line);
-// 		heap_manager(0,'r',line);
-// 		line = get_next_line(fd);
-// 		getchar();
-// 	}
-// 	// heap_manager(0,'r',line);
-// 	close(fd);
-// 	// heap_manager(0, 'f', 0);
-// }

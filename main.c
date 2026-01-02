@@ -3,18 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abahja <abahja@student-1337.ma>            +#+  +:+       +#+        */
+/*   By: mochajou <mochajou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 18:38:27 by abahja            #+#    #+#             */
-/*   Updated: 2025/12/31 19:27:45 by abahja           ###   ########.fr       */
+/*   Updated: 2026/01/02 22:30:32 by mochajou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/cub3d.h"
 #include <mlx.h>
 
+void	load_textures(t_cub3d *cub3d)
+{
+	const char	*paths[4] = {cub3d->north_path, cub3d->south_path,
+		cub3d->west_path, cub3d->east_path};
+	int			i;
 
-void	load_textures(t_cub3d *cub3d);
+	i = 0;
+	while (i < 4)
+	{
+		cub3d->tex[i].img = mlx_xpm_file_to_image(cub3d->mlx, (char *)paths[i],
+				&cub3d->tex[i].width, &cub3d->tex[i].height);
+		if (!cub3d->tex[i].img)
+		{
+			mlx_destroy_all(cub3d);
+			exit_failure(ERR_TEXTURE, 1);
+		}
+		cub3d->tex[i].addr = mlx_get_data_addr(cub3d->tex[i].img,
+				&cub3d->tex[i].pix_bits, &cub3d->tex[i].size_line,
+				&cub3d->tex[i].endian);
+		if (!cub3d->tex[i].addr)
+		{
+			mlx_destroy_all(cub3d);
+			exit_failure(ERR_TEXTURE, 1);
+		}
+		i++;
+	}
+}
+
 void	init_game(char **argv, t_cub3d *cub3d)
 {
 	ft_memset(cub3d, 0, sizeof(t_cub3d));
@@ -24,59 +50,12 @@ void	init_game(char **argv, t_cub3d *cub3d)
 	load_textures(cub3d);
 	set_directions(cub3d);
 }
-void	load_textures(t_cub3d *cub3d)
-{
-	const char *paths[4] = {
-		cub3d->north_path,
-		cub3d->south_path,
-		cub3d->west_path,
-		cub3d->east_path
-	};
-	int i;
-	// ft_memset(cub3d->tex, 0, sizeof(t_img_frame) * 4);
-	i = 0;
-	while (i < 4)
-	{
-		cub3d->tex[i].img = mlx_xpm_file_to_image(cub3d->mlx, (char *)paths[i], &cub3d->tex[i].width, &cub3d->tex[i].height);
-		if (!cub3d->tex[i].img)
-		{
-			mlx_destroy_all(cub3d);
-			// exit(1);
-			exit_failure(ERR_TEXTURE, 1);
-		}
-		cub3d->tex[i].addr = mlx_get_data_addr(cub3d->tex[i].img, &cub3d->tex[i].pix_bits, &cub3d->tex[i].size_line, &cub3d->tex[i].endian);
-		if (!cub3d->tex[i].addr)
-		{
-			mlx_destroy_all(cub3d);
-			exit_failure(ERR_TEXTURE, 1);
-		}
-		i++;
-	}
-}
-void	draw_plane_vector(t_cub3d *cub3d)
-{
-	int	tile;
-	int	x0;
-	int	y0;
-	int	x1;
-	int	y1;
-
-	tile = TILE_SIZE;
-	x0 = (int)(cub3d->player.posx * tile);
-	y0 = (int)(cub3d->player.posy * tile);
-	x1 = (int)((cub3d->player.posx + cub3d->player.plane_x * 0.8) * tile);
-	y1 = (int)((cub3d->player.posy + cub3d->player.plane_y * 0.8) * tile);
-	draw_line(&cub3d->img_frame, x0, y0, x1, y1, GREEN);
-}
 
 int	render_frame(t_cub3d *cub3d)
 {
 	mlx_clear_image(&cub3d->img_frame);
 	apply_movements(cub3d);
-	draw_map2d(cub3d);
-	draw_plane_vector(cub3d);
 	cast_rays(cub3d);
-	// draw_walls(cub3d);
 	mlx_put_image_to_window(cub3d->mlx, cub3d->win, cub3d->img_frame.img, 0, 0);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_read_errors.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abahja <abahja@student-1337.ma>            +#+  +:+       +#+        */
+/*   By: mochajou <mochajou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 23:42:40 by abahja            #+#    #+#             */
-/*   Updated: 2025/12/31 19:15:50 by abahja           ###   ########.fr       */
+/*   Updated: 2026/01/02 22:04:40 by mochajou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ void	check_chars(char *line, t_cub3d *config)
 		if (playerpos)
 		{
 			config->initial_dir = line[i];
-			config->player.posx = i + 0.5;
-			config->player.posy = (double)(config->map.height) + 0.5;
+			config->player.pos[X] = i + 0.5;
+			config->player.pos[Y] = (double)(config->map.height) + 0.5;
 			line[i] = '0';
 			player++;
 		}

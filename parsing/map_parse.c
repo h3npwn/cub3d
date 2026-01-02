@@ -6,7 +6,7 @@
 /*   By: mochajou <mochajou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 18:47:59 by abahja            #+#    #+#             */
-/*   Updated: 2025/12/29 23:44:49 by mochajou         ###   ########.fr       */
+/*   Updated: 2026/01/02 22:21:45 by mochajou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,27 +52,6 @@ void	copy_map(t_map map)
 	bfs(map, new_grid, 0, 0);
 	check_inside_map(map, new_grid);
 }
-
-// void	detect_player_position(char *line, t_cub3d *config, int y)
-// {
-// 	int	x;
-
-// 	x = 0;
-// 	while (line[x])
-// 	{
-// 		if (line[x] == 'N' || line[x] == 'S' || line[x] == 'E' || line[x] == 'W')
-// 		{
-// 			if (config->initial_dir != 0)
-// 				exit_failure(ERR_CONFIG, 1);
-// 			config->initial_dir = line[x];
-// 			config->player.posx = x + 0.5;
-// 			config->player.posy = y + 0.5;
-// 			line[x] = '0';
-// 			break ;
-// 		}
-// 		x++;
-// 	}
-// }
 
 void	combine_chunks(t_list *chunks, t_cub3d *config)
 {
@@ -126,4 +105,3 @@ void	parse_map(t_cub3d *config, int fd)
 		exit_failure(3, 1);
 	combine_chunks(chunks, config);
 }
-

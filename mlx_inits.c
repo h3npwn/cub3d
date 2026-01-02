@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_inits.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abahja <abahja@student-1337.ma>            +#+  +:+       +#+        */
+/*   By: mochajou <mochajou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 00:44:42 by abahja            #+#    #+#             */
-/*   Updated: 2025/12/31 19:27:43 by abahja           ###   ########.fr       */
+/*   Updated: 2026/01/02 22:29:27 by mochajou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ void	mlx_inits(t_cub3d *cfg)
 			&cfg->img_frame.endian);
 	if (!cfg->img_frame.addr)
 		exit_failure(ERR_INIT, 1);
-
-	printf("bits per pixel: %d\n", cfg->img_frame.pix_bits / 8);
 }
 
 void	img_pixel_put(t_img_frame *img, int x, int y, int color)
@@ -37,7 +35,6 @@ void	img_pixel_put(t_img_frame *img, int x, int y, int color)
 	char	*dst;
 
 	dst = img->addr + (y * img->size_line + x * (img->pix_bits / 8));
-
 	*(unsigned int *)dst = color;
 }
 
@@ -61,8 +58,9 @@ void	mlx_clear_image(t_img_frame *img)
 
 void	mlx_destroy_all(t_cub3d *cfg)
 {
-	int  i = 0;
+	int	i;
 
+	i = 0;
 	while (i < 4)
 	{
 		if (cfg->tex[i].img)

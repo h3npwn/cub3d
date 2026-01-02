@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abahja <abahja@student-1337.ma>            +#+  +:+       +#+        */
+/*   By: mochajou <mochajou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 18:41:13 by abahja            #+#    #+#             */
-/*   Updated: 2025/12/31 19:16:06 by abahja           ###   ########.fr       */
+/*   Updated: 2026/01/02 22:25:08 by mochajou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # define TEX_S				1
 # define TEX_W				2
 # define TEX_E				3
+
 typedef unsigned long	t_color;
 
 // Linked list node for BFS
@@ -65,9 +66,9 @@ typedef struct s_img
 	int		height;
 	int		pix_bits;
 	int		size_line;
+	int		tex_x;
+	int		tex_y;
 }			t_img_frame;
-
-
 
 typedef struct s_rgb
 {
@@ -75,6 +76,7 @@ typedef struct s_rgb
 	int	g;
 	int	b;
 }	t_rgb;
+
 typedef struct s_map
 {
 	char	**grid;
@@ -82,16 +84,13 @@ typedef struct s_map
 	int		height;
 }	t_map;
 
-
 typedef struct s_player
 {
-	double	posx;
-	double	posy;
-	double	dir_x;
-	double	dir_y;
-	double	plane_x;
-	double	plane_y;
+	double	pos[2];
+	double	dir[2];
+	double	plane[2];
 }	t_player;
+
 typedef struct s_rawcolor
 {
 	unsigned char	r;
@@ -135,9 +134,8 @@ typedef struct s_cub3d
 	t_color		f_color;
 	t_color		c_color;
 	t_img_frame	img_frame;
-	t_img_frame tex[4];
+	t_img_frame	tex[4];
 	t_map		map;
-	// t_texture	texture;
 	t_player	player;
 }	t_cub3d;
 

@@ -14,13 +14,9 @@ MLX_LIBS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lpthread -ldl
 
 ENGINE_SRCS = parsing/bfs_utils.c parsing/parse_utils.c parsing/map_parse.c  parsing/init_read_errors.c \
 				gnl/get_next_line.c \
-				main.c DEBUG/print_config.c \
-				player_mechanics/player_inits.c \
-				player_mechanics/moves_mechanics.c \
-				player_mechanics/key_handlers.c \
-				mlx_inits.c \
-				mlx_draw_utils.c \
-				2d_mapdraw.c raycast.c \
+				main.c DEBUG/print_config.c player_mechanics/player_inits.c player_mechanics/moves_mechanics.c player_mechanics/key_handlers.c \
+				mlx_inits.c raycast.c wall_draw.c\
+				#2d_mapdraw.c  mlx_draw_utils.c
 
 ENGINE_OBJS = $(ENGINE_SRCS:.c=.o)
 ENGINE_BIN = cub3d
