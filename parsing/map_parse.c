@@ -95,6 +95,8 @@ void	parse_map(t_cub3d *config, int fd)
 		config->map.height++;
 		line = get_next_line(fd);
 	}
+	if (!config->initial_dir)
+		exit_failure(4, 1);
 	while (line)
 	{
 		line = get_next_line(fd);
