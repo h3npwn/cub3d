@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dependencies.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abahja <abahja@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mochajou <mochajou@student.1337>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 18:38:00 by abahja            #+#    #+#             */
-/*   Updated: 2025/12/27 18:44:02 by abahja           ###   ########.fr       */
+/*   Updated: 2026/01/05 00:28:26 by mochajou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define DEPENDENCIES_H
 
 # include <mlx.h>
+# include <float.h>
 # include <limits.h>
 # include <stddef.h>
 # include <stdbool.h>

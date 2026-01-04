@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_read_errors.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mochajou <mochajou@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mochajou <mochajou@student.1337>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 23:42:40 by abahja            #+#    #+#             */
-/*   Updated: 2026/01/02 22:04:40 by mochajou         ###   ########.fr       */
+/*   Updated: 2026/01/04 21:34:14 by mochajou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,32 +55,5 @@ void	read_path_texture(int fd, t_cub3d *config)
 		}
 		else
 			exit_failure(ERR_MAP, 1);
-	}
-}
-
-void	check_chars(char *line, t_cub3d *config)
-{
-	static int		player = 0;
-	char			*playerpos;
-	int				i;
-
-	playerpos = NULL;
-	i = 0;
-	while (line[i])
-	{
-		if (!ft_strchr(ALLOWED_ELEMENTS, line[i]) || player > 1)
-			exit_failure(ERR_MAP, 1);
-		playerpos = ft_strchr(VIEW_P_DIR, line[i]);
-		if (playerpos)
-		{
-			config->initial_dir = line[i];
-			config->player.pos[X] = i + 0.5;
-			config->player.pos[Y] = (double)(config->map.height) + 0.5;
-			line[i] = '0';
-			player++;
-		}
-		if (line[i] == '\n')
-			line[i] = '\0';
-		i++;
 	}
 }

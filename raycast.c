@@ -3,27 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mochajou <mochajou@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mochajou <mochajou@student.1337>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/29 23:41:19 by mochajou          #+#    #+#             */
-/*   Updated: 2026/01/02 22:06:00 by mochajou         ###   ########.fr       */
+/*   Updated: 2026/01/05 00:31:35 by mochajou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/cub3d.h"
+#include <float.h>
 #include <mlx.h>
 
 void	init_ray(t_cub3d *cub3d, int x)
 {
 	double	cam_x;
 
-	cam_x = 2.0 * x / (double)WIN_WIDTH -1;
+	cam_x = 2.0 * x / (double)WIN_WIDTH - 1;
 	cub3d->ray.dir[X] = cub3d->player.dir[X] + cub3d->player.plane[X] * cam_x;
 	cub3d->ray.dir[Y] = cub3d->player.dir[Y] + cub3d->player.plane[Y] * cam_x;
 	cub3d->ray.map[X] = cub3d->player.pos[X];
 	cub3d->ray.map[Y] = cub3d->player.pos[Y];
-	cub3d->ray.delta_dist[X] = 1e30;
-	cub3d->ray.delta_dist[Y] = 1e30;
+	cub3d->ray.delta_dist[X] = DBL_MAX;
+	cub3d->ray.delta_dist[Y] = DBL_MAX;
 	if (cub3d->ray.dir[X] != 0)
 		cub3d->ray.delta_dist[X] = fabs(1.0 / cub3d->ray.dir[X]);
 	if (cub3d->ray.dir[Y] != 0)

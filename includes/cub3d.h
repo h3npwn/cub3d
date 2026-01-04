@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mochajou <mochajou@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mochajou <mochajou@student.1337>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 18:38:00 by abahja            #+#    #+#             */
-/*   Updated: 2026/01/02 22:41:31 by mochajou         ###   ########.fr       */
+/*   Updated: 2026/01/04 21:34:37 by mochajou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	exit_failure(int code, int isnoexit);
 t_cub3d	*init(char **av, t_cub3d *cub);
 void	bfs(t_map map, char **copy, int start_x, int start_y);
 void	check_inside_map(t_map map, char **copy);
-void	check_chars(char *line, t_cub3d *config);
+// void	check_chars(char *line, t_cub3d *config);
 void	print_config(t_cub3d *cfg);
 void	mlx_destroy_all(t_cub3d *cfg);
 /*-------------------*/

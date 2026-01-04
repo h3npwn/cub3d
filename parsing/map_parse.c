@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_parse.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mochajou <mochajou@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mochajou <mochajou@student.1337>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 18:47:59 by abahja            #+#    #+#             */
-/*   Updated: 2026/01/02 22:21:45 by mochajou         ###   ########.fr       */
+/*   Updated: 2026/01/04 23:28:41 by mochajou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,33 @@ void	combine_chunks(t_list *chunks, t_cub3d *config)
 	rows = NULL;
 }
 
+void	check_chars(char *line, t_cub3d *config)
+{
+	static int		player = 0;
+	char			*playerpos;
+	int				i;
+
+	playerpos = NULL;
+	i = 0;
+	while (line[i])
+	{
+		if (!ft_strchr(ALLOWED_ELEMENTS, line[i]) || player > 1)
+			exit_failure(ERR_MAP, 1);
+		playerpos = ft_strchr(VIEW_P_DIR, line[i]);
+		if (playerpos)
+		{
+			config->initial_dir = line[i];
+			config->player.pos[X] = i + 0.5;
+			config->player.pos[Y] = (double)(config->map.height) + 0.5;
+			line[i] = '0';
+			player++;
+		}
+		if (line[i] == '\n')
+			line[i] = '\0';
+		i++;
+	}
+}
+
 void	parse_map(t_cub3d *config, int fd)
 {
 	t_list	*chunks;
@@ -88,7 +115,7 @@ void	parse_map(t_cub3d *config, int fd)
 	line = skip_empty_lines(fd);
 	while (line)
 	{
-		if (line && *line == '\n')
+		if (*line == '\n')
 			break ;
 		check_chars(line, config);
 		ft_lstadd_back(&chunks, ft_lstnew(line));
