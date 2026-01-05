@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "includes/cub3d.h"
+#include <mlx.h>
 
 void	load_textures(t_cub3d *cub3d)
 {
