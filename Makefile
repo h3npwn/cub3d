@@ -8,7 +8,7 @@ LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
 
 GNL_DIR = ./gnl
-MLX_DIR = ./.minilibx-linux
+MLX_DIR = ./minilibx-linux
 MLX_LIBS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lpthread -ldl
 
 ENGINE_SRCS = parsing/bfs_utils.c parsing/parse_utils.c parsing/map_parse.c  parsing/init_read_errors.c \
