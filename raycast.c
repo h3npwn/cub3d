@@ -11,8 +11,6 @@
 /* ************************************************************************** */
 
 #include "includes/cub3d.h"
-#include <float.h>
-#include <mlx.h>
 
 void	init_ray(t_cub3d *cub3d, int x)
 {
