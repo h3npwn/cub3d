@@ -1,4 +1,3 @@
-# Top-level Makefile for cub3d project
 .PHONY: all libft mlx engine clean fclean re
 
 CC = cc
