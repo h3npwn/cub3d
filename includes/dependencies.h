@@ -13,7 +13,7 @@
 #ifndef DEPENDENCIES_H
 # define DEPENDENCIES_H
 
-# include "../minilibx-linux/mlx.h"
+# include <mlx.h>
 # include <float.h>
 # include <limits.h>
 # include <stddef.h>
