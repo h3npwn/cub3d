@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mochajou <mochajou@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mochajou <mochajou@student.1337>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 18:41:13 by abahja            #+#    #+#             */
-/*   Updated: 2026/01/02 22:25:08 by mochajou         ###   ########.fr       */
+/*   Updated: 2026/01/05 04:29:49 by mochajou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,6 @@ typedef struct s_img
 	int		tex_x;
 	int		tex_y;
 }			t_img_frame;
-
-typedef struct s_rgb
-{
-	int	r;
-	int	g;
-	int	b;
-}	t_rgb;
 
 typedef struct s_map
 {

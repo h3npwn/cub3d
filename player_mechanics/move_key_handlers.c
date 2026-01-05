@@ -3,22 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   key_handlers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mochajou <mochajou@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mochajou <mochajou@student.1337>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 18:27:27 by abahja            #+#    #+#             */
-/*   Updated: 2026/01/02 22:06:00 by mochajou         ###   ########.fr       */
+/*   Updated: 2026/01/05 04:16:51 by mochajou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
-
-int	destroy_exit(t_cub3d *cub3d)
-{
-	mlx_destroy_all(cub3d);
-	heap_manager(0, 'f', 0);
-	exit(0);
-	return (0);
-}
 
 int	key_press(int key, t_cub3d *cub3d)
 {
@@ -60,6 +52,33 @@ int	key_release(int key, t_cub3d *cub3d)
 	if (key == RIGHT_ARROW)
 		moves->c_right = 0;
 	return (0);
+}
+
+void	player_rotation(t_cub3d *cub3d, double angle)
+{
+	double	x;
+
+	x = cub3d->player.dir[X];
+	cub3d->player.dir[X] = x * cos(angle) - cub3d->player.dir[Y] * sin(angle);
+	cub3d->player.dir[Y] = x * sin(angle) + cub3d->player.dir[Y] * cos(angle);
+	x = cub3d->player.plane[X];
+	cub3d->player.plane[X] = x * cos(angle)
+		- cub3d->player.plane[Y] * sin(angle);
+	cub3d->player.plane[Y] = x * sin(angle)
+		+ cub3d->player.plane[Y] * cos(angle);
+}
+
+void	move(t_cub3d *cub3d, double x, double y)
+{
+	double	nx;
+	double	ny;
+
+	nx = cub3d->player.pos[X] + x * M_SPEED;
+	ny = cub3d->player.pos[Y] + y * M_SPEED;
+	if (cub3d->map.grid[(int)(cub3d->player.pos[Y])][(int)(nx)] != '1')
+		cub3d->player.pos[X] = nx;
+	if (cub3d->map.grid[(int)(ny)][(int)(cub3d->player.pos[X])] != '1')
+		cub3d->player.pos[Y] = ny;
 }
 
 void	apply_movements(t_cub3d *cub3d)

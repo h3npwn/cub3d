@@ -6,7 +6,7 @@
 /*   By: mochajou <mochajou@student.1337>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 18:38:27 by abahja            #+#    #+#             */
-/*   Updated: 2026/01/04 23:27:36 by mochajou         ###   ########.fr       */
+/*   Updated: 2026/01/05 04:09:05 by mochajou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		exit_failure(ERR_ARGC, 1);
 	init_game(argv, &cub3d);
-	print_config(&cub3d);
 	game(&cub3d);
 	return (0);
 }

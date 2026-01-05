@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_inits.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mochajou <mochajou@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mochajou <mochajou@student.1337>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 00:44:42 by abahja            #+#    #+#             */
-/*   Updated: 2026/01/02 22:29:27 by mochajou         ###   ########.fr       */
+/*   Updated: 2026/01/05 04:17:05 by mochajou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,12 @@ void	mlx_destroy_all(t_cub3d *cfg)
 		mlx_destroy_display(cfg->mlx);
 		free(cfg->mlx);
 	}
+}
+
+int	destroy_exit(t_cub3d *cub3d)
+{
+	mlx_destroy_all(cub3d);
+	heap_manager(0, 'f', 0);
+	exit(0);
+	return (0);
 }

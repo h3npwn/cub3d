@@ -3,61 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mochajou <mochajou@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mochajou <mochajou@student.1337>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 00:26:34 by mochajou          #+#    #+#             */
-/*   Updated: 2026/01/02 22:22:45 by mochajou         ###   ########.fr       */
+/*   Updated: 2026/01/05 04:12:41 by mochajou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
-
-void	fill_rgb(t_color *color, char *line)
-{
-	t_rawcolor	buffer;
-
-	buffer.r = (unsigned char)ft_atoi(line);
-	line += 2;
-	while (*line && (*line < '0' || *line > '9'))
-		line++;
-	buffer.g = (unsigned char)ft_atoi(line);
-	line += 2;
-	while (*line && (*line < '0' || *line > '9'))
-		line++;
-	buffer.b = (unsigned char)ft_atoi(line);
-	*color = (*(unsigned int *)&buffer);
-	*color = (buffer.r << 16) | (buffer.g << 8) | (buffer.b);
-	return ;
-}
-
-int	isvalid(char *line, t_cub3d	*config)
-{
-	const char	*paths[7] = {"NO ", "SO ", "EA ", "WE ", "F ", "C ", NULL};
-	int			i;
-
-	i = 0;
-	while (paths[i])
-	{
-		if (!ft_strncmp(line, paths[i], ft_strlen(paths[i])))
-		{
-			if (*line == 'C')
-				fill_rgb(&config->c_color, line + 2);
-			else if (*line == 'F')
-				fill_rgb(&config->f_color, line + 2);
-			else if (*line == 'S')
-				config->south_path = ft_substr(line, 3, ft_strlen(line) - 4);
-			else if (*line == 'N')
-				config->north_path = ft_substr(line, 3, ft_strlen(line) - 4);
-			else if (*line == 'E')
-				config->east_path = ft_substr(line, 3, ft_strlen(line) - 4);
-			else if (*line == 'W')
-				config->west_path = ft_substr(line, 3, ft_strlen(line) - 4);
-			return (i + 1);
-		}
-		i++;
-	}
-	return (0);
-}
 
 int	file_check(const char *file, const char *ext)
 {
@@ -99,6 +52,32 @@ void	check_inside_map(t_map map, char **copy)
 		}
 		i++;
 	}
+}
+
+void	copy_map(t_map map)
+{
+	char	**new_grid;
+	int		i;
+
+	i = 0;
+	new_grid = heap_manager(sizeof(char *) * (map.height + 3), 'a', 0);
+	new_grid[map.height + 2] = NULL;
+	new_grid[i] = heap_manager(sizeof(char) * (map.width + 3), 'a', 0);
+	ft_memset(new_grid[i], ' ', map.width + 2);
+	new_grid[i][map.width + 2] = 0;
+	while (map.grid[i])
+	{
+		new_grid[i + 1] = heap_manager(sizeof(char) * (map.width + 3), 'a', 0);
+		ft_memset(new_grid[i + 1], ' ', map.width + 2);
+		new_grid[i + 1][map.width + 2] = 0;
+		ft_memcpy(new_grid[i + 1] + 1, map.grid[i], ft_strlen(map.grid[i]));
+		i++;
+	}
+	new_grid[i + 1] = heap_manager(sizeof(char) * (map.width + 3), 'a', 0);
+	ft_memset(new_grid[i + 1], ' ', map.width + 2);
+	new_grid[i + 1][map.width + 2] = 0;
+	bfs(map, new_grid, 0, 0);
+	check_inside_map(map, new_grid);
 }
 
 void	ft_init_map(t_cub3d *config)

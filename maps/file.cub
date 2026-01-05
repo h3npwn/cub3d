@@ -1,13 +1,13 @@
-NO ./assets/north.xpm
-SO ./assets/south.xpm
-EA ./assets/east.xpm
-WE ./assets/west.xpm
+NO ./assets/tex.xpm
+SO ./assets/ss.xpm
+EA ./assets/tex.xpm
+WE ./assets/tex.xpm
 
 F 220,100,1
 C 225,30,1
 
         11111111111111111111111111
-        1N000011011000000110010001
+        1S000011011000000110010001
         100100110000000001 1000011
 111111111011000001110000001000001
 100000000011000001110111111111111

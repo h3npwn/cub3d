@@ -6,7 +6,7 @@
 /*   By: mochajou <mochajou@student.1337>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/29 23:41:19 by mochajou          #+#    #+#             */
-/*   Updated: 2026/01/05 00:31:35 by mochajou         ###   ########.fr       */
+/*   Updated: 2026/01/05 01:55:03 by mochajou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	init_ray(t_cub3d *cub3d, int x)
 		cub3d->ray.delta_dist[Y] = fabs(1.0 / cub3d->ray.dir[Y]);
 }
 
-void	compelete_dda_utils(t_ray *ray, int ax, double pos)
+void	step_dir(t_ray *ray, int ax, double pos)
 {
 	if (ray->dir[ax] < 0)
 	{
@@ -50,8 +50,8 @@ double	dda_utils(t_cub3d *cub3d)
 	t_ray	*ray;
 
 	ray = &cub3d->ray;
-	compelete_dda_utils(ray, X, cub3d->player.pos[X]);
-	compelete_dda_utils(ray, Y, cub3d->player.pos[Y]);
+	step_dir(ray, X, cub3d->player.pos[X]);
+	step_dir(ray, Y, cub3d->player.pos[Y]);
 	while (1336)
 	{
 		if (ray->side_dist[X] < ray->side_dist[Y])
