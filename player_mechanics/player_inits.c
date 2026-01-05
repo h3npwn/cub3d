@@ -17,15 +17,17 @@ static void	ft_setdirs_ew(t_cub3d *cfg)
 	double	plane;
 
 	plane = tan((FOV * M_PI / 360.0));
-	cfg->player.dir[Y] = 0;
-	cfg->player.plane[X] = 0;
 	if (cfg->initial_dir == 'E')
 	{
+		cfg->player.dir[Y] = 0;
+		cfg->player.plane[X] = 0;
 		cfg->player.dir[X] = 1;
 		cfg->player.plane[Y] = plane;
 	}
 	else if (cfg->initial_dir == 'W')
 	{
+		cfg->player.dir[Y] = 0;
+		cfg->player.plane[X] = 0;
 		cfg->player.dir[X] = -1;
 		cfg->player.plane[Y] = -plane;
 	}
@@ -36,15 +38,17 @@ static void	ft_setdirs_ns(t_cub3d *cfg)
 	double	plane;
 
 	plane = tan((FOV * M_PI / 360.0));
-	cfg->player.dir[X] = 0;
-	cfg->player.plane[Y] = 0;
 	if (cfg->initial_dir == 'N')
 	{
+		cfg->player.dir[Y] = 0;
+		cfg->player.plane[X] = 0;
 		cfg->player.dir[Y] = -1;
 		cfg->player.plane[X] = plane;
 	}
 	else if (cfg->initial_dir == 'S')
 	{
+		cfg->player.dir[Y] = 0;
+		cfg->player.plane[X] = 0;
 		cfg->player.dir[Y] = 1;
 		cfg->player.plane[X] = -plane;
 	}
